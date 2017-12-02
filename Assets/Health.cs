@@ -14,5 +14,5 @@ public abstract class Health : MonoBehaviour {
 		
 	}
 
-    public abstract void Hit();
+    public abstract void Hit(int damage);
 }

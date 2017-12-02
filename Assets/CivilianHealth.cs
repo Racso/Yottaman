@@ -14,8 +14,8 @@ public class CivilianHealth : Health {
 		
 	}
 
-    public override void Hit()
-    {
+    public override void Hit(int damage)
+    {   
         Destroy(gameObject);
     }
 }

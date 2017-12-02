@@ -52,7 +52,7 @@ public class EnemyFloor : Enemy {
             var hit = Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, 0, LayerVictims);
             if (!hit) { continue; }
             Health victimHealth = hit.collider.GetComponent<Health>();
-            victimHealth.Hit();
+            victimHealth.Hit(10);
             yield return new WaitForSeconds(AttackCooldown - timeBetweenChecks);
         }
     }
