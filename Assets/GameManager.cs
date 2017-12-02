@@ -5,30 +5,47 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public Civilian PrefabCivilian;
-    public List<Transform> CivilianSpawnPoints;
+    public Enemy PrefabCriminal;
+    public List<Transform> SpawnPoints;
 
-    private float MinTimeForCivilians = 0.1f;
-    private float MaxTimeForCivilians = 3f;
+    private Vector2 TimeForCivilians = new Vector2(0.2f, 3f);
+    private Vector2 TimeForCriminals = new Vector2(3f, 5f);
 
-	void Start () {
+    void Start ()
+    {
         StartCoroutine(Routine_SpawnCivilians());
-	}
+        StartCoroutine(Routine_SpawnCriminals());
+    }
 	
-	void Update () {
+	void Update ()
+    {
 		
 	}
+
+    IEnumerator Routine_SpawnCriminals()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(TimeForCriminals.x, TimeForCriminals.y));
+
+            var newCriminal = Instantiate(PrefabCriminal) as EnemyFloor;
+            int startingPoint = Random.Range(0, SpawnPoints.Count);
+            newCriminal.transform.position = SpawnPoints[startingPoint].position;
+            newCriminal.Points = SpawnPoints;
+        }
+    }
 
     IEnumerator Routine_SpawnCivilians()
     {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(MinTimeForCivilians, MaxTimeForCivilians));
+            yield return new WaitForSeconds(Random.Range(TimeForCivilians.x, TimeForCivilians.y));
 
             var newCivilian = Instantiate(PrefabCivilian);
-            int startingPoint = Random.Range(0, CivilianSpawnPoints.Count);
-            int endingPoint = (startingPoint + 1 ) % CivilianSpawnPoints.Count;
-            newCivilian.transform.position = CivilianSpawnPoints[startingPoint].position;
-            newCivilian.FinishPoint = CivilianSpawnPoints[endingPoint].position;
+            int startingPoint = Random.Range(0, SpawnPoints.Count);
+            int endingPoint = (startingPoint + 1 ) % SpawnPoints.Count;
+            newCivilian.transform.position = SpawnPoints[startingPoint].position;
+            newCivilian.FinishPoint = SpawnPoints[endingPoint].position;
         }
     }
 }
