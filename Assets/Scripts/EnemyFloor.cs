@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyFloor : Enemy {
 
-    public float RunningSpeed;
 
     public LayerMask LayerVictims;
 
@@ -12,28 +11,22 @@ public class EnemyFloor : Enemy {
     private float AttackCooldown = 5;
 
     public List<Transform> Points;
-    public Vector3 NextPoint;
+
 
     public Vector2 TimeBetweenPositionChanges;
 
-	void Start () {
+	public override void Start () {
+        base.Start();
         StartCoroutine(Routine_ChangeLocation());
         StartCoroutine(Routine_Attack());
     }
 	
-	void Update ()
-    {
-        if (IsMoving())
-        {
-            var direction = NextPoint - transform.position;
-            transform.Translate(direction.normalized * RunningSpeed * Time.deltaTime);
-        }
-    }
 
     private IEnumerator Routine_ChangeLocation()
     {
         while (true)
         {
+            if (Points.Count < 2) { yield break; }
             NextPoint = Points[0].position.RandomBetween(Points[1].position);
             yield return new WaitUntil(() => IsMoving()==false);
             yield return new WaitForSeconds(Random.Range(TimeBetweenPositionChanges.x, TimeBetweenPositionChanges.y));
@@ -43,7 +36,8 @@ public class EnemyFloor : Enemy {
     private IEnumerator Routine_Attack()
     {
         var timeBetweenChecks = 0.5f;
-        var boxSize = new Vector2(AttackRange * 2, 50);
+        var boxSize = new Vector2(AttackRange * 2, AttackRange * 2);
+
         while (true)
         {
             yield return new WaitForSeconds(timeBetweenChecks);
@@ -51,15 +45,11 @@ public class EnemyFloor : Enemy {
 
             var hit = Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, 0, LayerVictims);
             if (!hit) { continue; }
-            Health victimHealth = hit.collider.GetComponent<Health>();
-            victimHealth.Hit(10);
+            Attack(hit.collider.gameObject);
             yield return new WaitForSeconds(AttackCooldown - timeBetweenChecks);
         }
     }
 
-    private bool IsMoving()
-    {
-        return !transform.position.IsCloseEnoughTo(NextPoint);
-    }
+
 
 }

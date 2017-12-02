@@ -16,4 +16,11 @@ public static class Extensions
     {
         return new Vector3(Random.Range(a.x, b.x), Random.Range(a.y, b.y));
     }
+
+    public static Vector3 TargetCenter(this GameObject go)
+    {
+        var col = go.GetComponent<Collider2D>();
+        if (col == null) { return go.transform.position; }
+        return col.bounds.center;
+    }
 }
