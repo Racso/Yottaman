@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
+    public int Damage;
     public LayerMask Targets;
     public float Speed;
 
@@ -27,7 +29,7 @@ public class Bullet : MonoBehaviour
     {
         if (!Targets.ContainsObject(collision.gameObject)) { return; }
         Health victimHealth = collision.GetComponent<Health>();
-        victimHealth.Hit(10);
+        victimHealth.Hit(Damage);
         Destroy(gameObject);
     }
 

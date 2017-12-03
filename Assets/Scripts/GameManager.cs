@@ -8,11 +8,12 @@ public class GameManager : MonoBehaviour {
     public Enemy PrefabSuelo;
     public Enemy PrefabJetpack;
 
-    private Vector2 TimeForCivilians = new Vector2(0.2f, 3f);
-    private Vector2 TimeForCriminals = new Vector2(3f, 5f);
+    private Vector2 TimeForCriminals = new Vector2(0.5f, 1f);
 
     void Start ()
     {
+        AudioManager.Instance.PlayMusic();
+
         StartCoroutine(Routine_SpawnCriminals());
     }
 	

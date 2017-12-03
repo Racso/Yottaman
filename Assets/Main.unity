@@ -538,6 +538,7 @@ GameObject:
   m_Component:
   - component: {fileID: 336599060}
   - component: {fileID: 336599059}
+  - component: {fileID: 336599061}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -573,6 +574,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &336599061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 336599058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b0922d5ad8e74442bf385d8171b56e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicVolume: 1
+  SFXVolume: 1
+  BGMusic: {fileID: 8300000, guid: 44b9166c9c38d7a439bd0496e972a146, type: 3}
+  Laser: {fileID: 8300000, guid: f641cbc83919d9948ad5ff078b4f5dea, type: 3}
+  Shoot: {fileID: 8300000, guid: afbd4196398c337498c2a2615d7fb546, type: 3}
+  Die1: {fileID: 8300000, guid: ac488a8c974cd4b48b0cf2f45e7b9c94, type: 3}
+  Die2: {fileID: 8300000, guid: 646203327d3c19d458e47b6098e460e7, type: 3}
+  ExplosionSmall: {fileID: 8300000, guid: aacc607cb74998e4cb5cd4caa09bdb7a, type: 3}
+  ExplosionHard: {fileID: 8300000, guid: a3ba958852a70004f931df2d84760cb1, type: 3}
+  Shield: {fileID: 8300000, guid: b7dd295429692384c91987ff70695508, type: 3}
+  ExplosionGlobal: {fileID: 8300000, guid: ae9a0ae38d3c4104a94fc36cdf1a79e4, type: 3}
 --- !u!1 &339848526
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +805,26 @@ Prefab:
         type: 2}
       propertyPath: FlightSpeed
       value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 61404912812344810, guid: 0aedbfccfd8b27d4d94b2babfc393182,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 28.617785
+      objectReference: {fileID: 0}
+    - target: {fileID: 61404912812344810, guid: 0aedbfccfd8b27d4d94b2babfc393182,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 139.25241
+      objectReference: {fileID: 0}
+    - target: {fileID: 61404912812344810, guid: 0aedbfccfd8b27d4d94b2babfc393182,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 75.61598
+      objectReference: {fileID: 0}
+    - target: {fileID: 61404912812344810, guid: 0aedbfccfd8b27d4d94b2babfc393182,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: 1.3218775
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 212404642516717238, guid: 0aedbfccfd8b27d4d94b2babfc393182, type: 2}

@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
         var newBullet = Instantiate(BulletPrefab);
         PointerWhenAttacking.Paused = true;
         newBullet.SetBullet(PointerWhenAttacking.HotPoint.transform.position, target);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.Shoot);
 
         yield return new WaitForSeconds(0.2f);
 

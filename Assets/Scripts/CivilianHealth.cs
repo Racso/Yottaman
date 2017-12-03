@@ -17,6 +17,14 @@ public class CivilianHealth : Health {
         enemy.StopAllCoroutines();
         enemy.enabled = false;
         enemy.PointerWhenAttacking.gameObject.SetActive(false);
+        if (damage < 2)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.Die1);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.Die2);
+        }
         StartCoroutine(Coroutine_Die());
     }
 

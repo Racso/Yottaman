@@ -5,7 +5,7 @@ public class HeroHealth : Health
 {
     public override void Hit(int damage)
     {
-
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.Shield);
     }
 
     // Use this for initialization
