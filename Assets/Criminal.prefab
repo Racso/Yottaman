@@ -53,7 +53,8 @@ GameObject:
   - component: {fileID: 114764965793491052}
   - component: {fileID: 61835815293893734}
   - component: {fileID: 50127794243935482}
-  m_Layer: 0
+  - component: {fileID: 114833303271470024}
+  m_Layer: 11
   m_Name: Criminal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,6 +968,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4a179c16de604057bc1902978187da5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114833303271470024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1024709414354680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35732d44606b9544f9d828de659f27a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114978489795123370

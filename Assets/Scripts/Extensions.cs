@@ -23,4 +23,9 @@ public static class Extensions
         if (col == null) { return go.transform.position; }
         return col.bounds.center;
     }
+
+    public static bool ContainsObject(this LayerMask mask, GameObject go)
+    {
+        return (mask.value & 1 << go.layer) != 0;
+    }
 }

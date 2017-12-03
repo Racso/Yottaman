@@ -7,7 +7,7 @@ public class EnemyFloor : Enemy {
 
     public LayerMask LayerVictims;
 
-    private float AttackRange = 200;
+    private float AttackRange = 400;
     private float AttackCooldown = 5;
 
     public List<Transform> Points;

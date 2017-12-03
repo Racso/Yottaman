@@ -7,6 +7,7 @@ public class Hero : Singleton<Hero> {
     private Collider2D _collider;
     public float FlightSpeed;
     public LayerMask SolidLayers;
+    public int Level = 0;
 
 	void Start () {
         _collider = GetComponent<Collider2D>();

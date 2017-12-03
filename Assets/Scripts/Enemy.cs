@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     private GameObject AttackTarget;
 
+    public bool IsDying;
+
     Animator _anim;
 
     private bool _attacking = false;

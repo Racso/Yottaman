@@ -12,17 +12,23 @@ public class Bullet : MonoBehaviour
 
     public void SetBullet(Vector3 startingPoint, GameObject target)
     {
+        SetBullet(startingPoint, target.TargetCenter());
+    }
+
+    public void SetBullet(Vector3 startingPoint, Vector3 target)
+    {
         transform.position = startingPoint;
         _rb = GetComponent<Rigidbody2D>();
-        var direction = target.TargetCenter() - startingPoint;
+        var direction = target - startingPoint;
         _rb.velocity = direction.normalized * Speed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("balazo");
+        if (!Targets.ContainsObject(collision.gameObject)) { return; }
         Health victimHealth = collision.GetComponent<Health>();
         victimHealth.Hit(10);
+        Destroy(gameObject);
     }
 
     void Update()

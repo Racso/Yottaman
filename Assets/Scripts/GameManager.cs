@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public Civilian PrefabCivilian;
+
     public Enemy PrefabCriminal;
     public List<Transform> SpawnPoints;
 
@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour {
 
     void Start ()
     {
-        StartCoroutine(Routine_SpawnCivilians());
         StartCoroutine(Routine_SpawnCriminals());
     }
 	
@@ -35,17 +34,5 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    IEnumerator Routine_SpawnCivilians()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(Random.Range(TimeForCivilians.x, TimeForCivilians.y));
 
-            var newCivilian = Instantiate(PrefabCivilian);
-            int startingPoint = Random.Range(0, SpawnPoints.Count);
-            int endingPoint = (startingPoint + 1 ) % SpawnPoints.Count;
-            newCivilian.transform.position = SpawnPoints[startingPoint].position;
-            newCivilian.FinishPoint = SpawnPoints[endingPoint].position;
-        }
-    }
 }
