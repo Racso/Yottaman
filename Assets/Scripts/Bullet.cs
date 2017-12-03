@@ -29,8 +29,8 @@ public class Bullet : MonoBehaviour
     {
         if (!Targets.ContainsObject(collision.gameObject)) { return; }
         Health victimHealth = collision.GetComponent<Health>();
-        victimHealth.Hit(Damage);
-        Destroy(gameObject);
+        victimHealth.Hit(Damage, this);
+        
     }
 
     void Update()

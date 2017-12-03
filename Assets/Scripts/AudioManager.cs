@@ -7,6 +7,8 @@ public class AudioManager : Singleton<AudioManager>
     public float MusicVolume = 1;
     public float SFXVolume = 1;
 
+    public AudioSource MusicSource;
+
     public AudioClip BGMusic;
 
     public AudioClip Laser;
@@ -31,13 +33,16 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlayMusic()
     {
-        var go = new GameObject("BGMUSIC");
-        go.transform.parent = transform.parent;
-        var source = go.AddComponent<AudioSource>();
-        source.clip = BGMusic;
-        source.loop = true;
-        source.Play();
-        source.volume = MusicVolume;
+        if (MusicSource == null)
+        {
+            var go = new GameObject("BGMUSIC");
+            go.transform.parent = transform.parent;
+            MusicSource = go.AddComponent<AudioSource>();
+        }
+        MusicSource.clip = BGMusic;
+        MusicSource.loop = true;
+        MusicSource.Play();
+        MusicSource.volume = MusicVolume;
     }
     public void PlaySFX(AudioClip effect)
     {

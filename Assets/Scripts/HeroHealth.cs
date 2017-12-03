@@ -3,8 +3,9 @@ using System.Collections;
 
 public class HeroHealth : Health
 {
-    public override void Hit(int damage)
+    public override void Hit(int damage, Bullet bullet)
     {
+        DestroyObject(bullet.gameObject);
         AudioManager.Instance.PlaySFX(AudioManager.Instance.Shield);
     }
 

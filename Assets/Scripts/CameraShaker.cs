@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraShaker : MonoBehaviour {
 
 	private float _shakeTime = 0;
-	private float _shakeMaxDistance = 0.5f;
+	private float _shakeMaxDistance = 15f;
 	private int _shakeEveryFrames = 1;
 	private Vector3 _cameraInitialPosition;
 	private Vector3 _lastCameraPosition;

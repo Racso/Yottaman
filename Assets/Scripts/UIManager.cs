@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
@@ -11,10 +12,14 @@ public class UIManager : Singleton<UIManager>
 
     public Text TxtSay;
 
+    public GameObject GameOverImage;
+    public GameObject GameOverImageEarthOK;
+
     private Coroutine _routine;
 
     void Start()
     {
+        GameOverImage.SetActive(false);
     }
 
 
@@ -39,7 +44,7 @@ public class UIManager : Singleton<UIManager>
     private IEnumerator SayMessage(string msg, float time)
     {
         TxtSay.text = msg;
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         TxtSay.text = "";
     }
 
@@ -54,6 +59,18 @@ public class UIManager : Singleton<UIManager>
             default:
                 return "9001";
         }
+    }
+
+    public void ShowGameOverImage()
+    {
+        StartCoroutine(RoutineShowGameOver());
+    }
+
+    IEnumerator RoutineShowGameOver()
+    {
+        GameOverImage.gameObject.SetActive(true);
+        yield return new WaitForSecondsRealtime(1);
+        GameOverImageEarthOK.SetActive(false);
     }
 
     public void SaySorryEnemy()
@@ -87,6 +104,16 @@ public class UIManager : Singleton<UIManager>
             "Well, that's it for today, I guess.",
             "There you go. No more crime. Ever.",
             "Okay... sh*t.",
+        };
+        Say(strings[Random.Range(0, strings.Length)], 100);
+    }
+
+    public void SayPreGameOver()
+    {
+        var strings = new string[] {
+            "OH, NO...",
+            "THAT DOESN'T LOOK GOOD AT ALL.",
+            "OH, CRAP.",
         };
         Say(strings[Random.Range(0, strings.Length)]);
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
 
@@ -13,6 +14,7 @@ public class GameManager : Singleton<GameManager> {
     private Coroutine TutorialRoutine;
     private Coroutine SpawnerRoutine;
     private bool SpawningEnemies = false;
+    private bool InGameOver = false;
 
     private Vector2 TimeForCriminals = new Vector2(0.5f, 1f);
 
@@ -26,9 +28,14 @@ public class GameManager : Singleton<GameManager> {
 	
 	void Update ()
     {
+        if (InGameOver && Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Main");
+        }
         if (Input.GetKeyDown(KeyCode.Escape) && TutorialRoutine != null)
         {
             StopCoroutine(TutorialRoutine);
+            TutorialRoutine = null;
             Hero.Instance.GetComponent<Hero>().enabled = true;
             SpawningEnemies = true;
         }
@@ -160,6 +167,41 @@ public class GameManager : Singleton<GameManager> {
         }
         Hero.Instance.Level += 1;
         Time.timeScale = 1;
+    }
+
+    public void GameOver(Vector3 positionOfGameOver)
+    {
+        if (InGameOver) { return; }
+        InGameOver = true;
+        StartCoroutine(RoutineGameOver(positionOfGameOver));
+    }
+
+    IEnumerator RoutineGameOver(Vector3 position)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1);
+        UIManager.Instance.SayPreGameOver();
+        yield return new WaitForSecondsRealtime(1);
+        CameraManager.Instance.IsFollowing = false;
+        CameraManager.Instance.transform.position = new Vector3(position.x, position.y, CameraManager.Instance.transform.position.z);
+        yield return new WaitForSecondsRealtime(1);
+        Time.timeScale = 1;
+        CameraManager.Instance.Shake(4);
+        yield return new WaitForSecondsRealtime(2);
+        UIManager.Instance.ShowGameOverImage();
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (var bullet in FindObjectsOfType<Bullet>())
+        {
+            Destroy(bullet.gameObject);
+        }
+        StopCoroutine(SpawnerRoutine);
+        Destroy(Hero.Instance.gameObject);
+        yield return new WaitForSecondsRealtime(2);
+        UIManager.Instance.SayGameOver();
+        StopAllCoroutines();
     }
 
 

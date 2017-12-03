@@ -5,19 +5,21 @@ public class CameraManager : Singleton<CameraManager> {
 
 	public GameObject character;
 
-	private CameraFollow follow;
+	public CameraFollow follow;
 	private CameraShaker shaker;
+
+    public bool IsFollowing = true;
 
 	void Start()
 	{
 		follow = GetComponent<CameraFollow> ();
-		follow.Follow (character.transform);
+		follow.FollowWithCurrentOffset (character.transform);
 		shaker = GetComponent<CameraShaker> ();
 	}
 
 	void LateUpdate()
 	{
-		follow.ManualUpdate ();
+        if (IsFollowing) { follow.ManualUpdate(); }
 		shaker.ManualUpdate ();
 	}
 
@@ -26,9 +28,5 @@ public class CameraManager : Singleton<CameraManager> {
 		shaker.Shake (time);
 	}
 
-    public void FocusOnGameOver(Vector3 position)
-    {
-
-    }
 
 }

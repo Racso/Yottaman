@@ -10,8 +10,9 @@ public class CivilianHealth : Health {
         _anim = GetComponentInChildren<Animator>();	
 	}
 	
-    public override void Hit(int damage)
+    public override void Hit(int damage, Bullet bullet)
     {
+        Destroy(bullet.gameObject);
         _anim.SetBool("dying", true);
         var enemy = GetComponent<Enemy>();
         enemy.StopAllCoroutines();
