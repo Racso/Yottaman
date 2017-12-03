@@ -11,5 +11,9 @@ public abstract class HeroSkill : MonoBehaviour
         _hero = GetComponent<Hero>();
     }
 
+    public static Vector3 PointerPosition()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
 
 }

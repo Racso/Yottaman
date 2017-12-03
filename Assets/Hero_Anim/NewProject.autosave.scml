@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r11" pixel_mode="1">
+    <folder id="0">
+        <file id="0" name="Torso.png" width="6" height="16" pivot_x="0" pivot_y="1"/>
+        <file id="1" name="Cabeza.png" width="5" height="6" pivot_x="0" pivot_y="1"/>
+        <file id="2" name="Brazo.png" width="1" height="12" pivot_x="0" pivot_y="1"/>
+        <file id="3" name="PiernaAbajo.png" width="2" height="6" pivot_x="0" pivot_y="1"/>
+        <file id="4" name="PiernaArriba.png" width="2" height="6" pivot_x="0" pivot_y="1"/>
+    </folder>
+    <entity id="0" name="YottamanAnimation">
+        <animation id="0" name="Idle" length="1000" interval="100">
+            <mainline>
+                <key id="0">
+                    <object_ref id="0" timeline="0" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="1" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="2" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="3" key="0" z_index="3"/>
+                    <object_ref id="4" timeline="4" key="0" z_index="4"/>
+                    <object_ref id="5" timeline="5" key="0" z_index="5"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="Torso">
+                <key id="0" spin="0">
+                    <object folder="0" file="0" x="-24" y="247" angle="0" scale_x="10" scale_y="10"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="PiernaAbajoDer">
+                <key id="0" spin="0">
+                    <object folder="0" file="3" x="-34" y="47" scale_x="10" scale_y="10"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="PiernaAbajoIzq">
+                <key id="0" spin="0">
+                    <object folder="0" file="3" x="6" y="47" scale_x="10" scale_y="10"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="PiernaArribaDer">
+                <key id="0" spin="0">
+                    <object folder="0" file="4" x="16" y="97" scale_x="10" scale_y="10"/>
+                </key>
+            </timeline>
+            <timeline id="4" name="PiernaArribaIzq">
+                <key id="0" spin="0">
+                    <object folder="0" file="4" x="-24" y="97" scale_x="10" scale_y="10"/>
+                </key>
+            </timeline>
+            <timeline id="5" name="Cabeza">
+                <key id="0" spin="0">
+                    <object folder="0" file="1" x="76" y="237" scale_x="10" scale_y="10"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>

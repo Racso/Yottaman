@@ -15,7 +15,7 @@ public class HeroLaser : HeroSkill
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !_isInCooldown)
+        if (Input.GetButton("Fire1") && !_isInCooldown)
         {
             _isInCooldown = true;
             StartCoroutine(Routine_Cooldown());
@@ -23,6 +23,8 @@ public class HeroLaser : HeroSkill
             var newLaser = Instantiate(BulletPrefabsPerLevel[_hero.Level]);
             newLaser.SetBullet(LaserPosition.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
+
+        _hero._anim.SetBool("laser", Input.GetButton("Fire1"));
     }
 
     private IEnumerator Routine_Cooldown()

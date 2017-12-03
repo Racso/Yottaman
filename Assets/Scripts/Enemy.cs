@@ -49,10 +49,7 @@ public class Enemy : MonoBehaviour
         }
         else if (IsAttacking() && AttackTarget != null)
         {
-            var direction = AttackTarget.transform.position - transform.position;
-            var newScale = transform.localScale;
-            newScale.x = Mathf.Abs(newScale.x) * Mathf.Sign(direction.x);
-            transform.localScale = newScale;
+            transform.localScale = transform.LocalScaleLookingTowards(AttackTarget.transform.position);
         }
     }
 
