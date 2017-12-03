@@ -2,33 +2,54 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : Singleton<GameManager> {
 
+    public int EnemiesLeft;
+    private int TotalEnemies;
 
     public Enemy PrefabSuelo;
     public Enemy PrefabJetpack;
+
+    private Coroutine TutorialRoutine;
+    private Coroutine SpawnerRoutine;
+    private bool SpawningEnemies = false;
 
     private Vector2 TimeForCriminals = new Vector2(0.5f, 1f);
 
     void Start ()
     {
+        TotalEnemies = EnemiesLeft;
         AudioManager.Instance.PlayMusic();
-
-        StartCoroutine(Routine_SpawnCriminals());
+        TutorialRoutine = StartCoroutine(Tutorial());
+        SpawnerRoutine = StartCoroutine(Routine_SpawnCriminals());
     }
 	
 	void Update ()
     {
-		
+        if (Input.GetKeyDown(KeyCode.Escape) && TutorialRoutine != null)
+        {
+            StopCoroutine(TutorialRoutine);
+            Hero.Instance.GetComponent<Hero>().enabled = true;
+            SpawningEnemies = true;
+        }
+		if (EnemiesLeft < 1)
+        {
+            if (FindObjectOfType<Enemy>() == null)
+            {
+                print("WON");
+                StartCoroutine(Win());
+            }
+        }
 	}
 
     IEnumerator Routine_SpawnCriminals()
     {
-        while (true)
+        while (EnemiesLeft>0)
         {
             yield return new WaitForSeconds(Random.Range(TimeForCriminals.x, TimeForCriminals.y));
+            if (!SpawningEnemies) { continue; }
 
-            var criminalType = 1; // Random.Range(0, 2);
+            var criminalType = Random.Range(0, 2);
 
             if (criminalType == 0)
             {
@@ -39,20 +60,26 @@ public class GameManager : MonoBehaviour {
                 SpawnJetpack();
             }
 
+            EnemiesLeft -= 1;
+            if (EnemiesLeft == NextLevelUp())
+            {
+                StartCoroutine(LevelUp());
+            }
         }
     }
 
 
-    public void SpawnFloor()
+    public EnemyFloor SpawnFloor()
     {
         var newCriminal = Instantiate(PrefabSuelo) as EnemyFloor;
         newCriminal.Points.Add(Scenario.Instance.BottomLeft);
         newCriminal.Points.Add(Scenario.Instance.BottomRight);
         int startingSide = Random.Range(0, 2);
         newCriminal.transform.position = newCriminal.Points[startingSide].position;
+        return newCriminal;
     }
 
-    public void SpawnJetpack()
+    public EnemyFloor SpawnJetpack()
     {
         var newCriminal = Instantiate(PrefabJetpack) as EnemyFloor;
         newCriminal.Points.Add(Scenario.Instance.BottomLeft);
@@ -61,6 +88,79 @@ public class GameManager : MonoBehaviour {
         newCriminal.transform.position = startingSide == 0 ?
             Scenario.Instance.BottomLeft.position.RandomBetween(Scenario.Instance.TopLeft.position) :
             Scenario.Instance.BottomRight.position.RandomBetween(Scenario.Instance.TopRight.position);
+        return newCriminal;
     }
+
+    private IEnumerator Win()
+    {
+        yield return null;
+    }
+
+    private int NextLevelUp()
+    {
+        if (Hero.Instance.Level == 0) { return TotalEnemies-10; }
+        if (Hero.Instance.Level == 1) { return TotalEnemies-15; }
+        return -999999;
+    }
+
+
+    private IEnumerator Tutorial()
+    {
+        yield return null;
+        Hero.Instance.GetComponent<Hero>().enabled = false;
+        var tutorialCriminal = SpawnFloor();
+        var newPos = tutorialCriminal.transform.position;
+        newPos.x = 0;
+        tutorialCriminal.transform.position = newPos;
+        tutorialCriminal.Points.Clear();
+
+        UIManager.Instance.Say("( Press ESC at any time to SKIP the tutorial )",3.5f);
+        yield return new WaitForSeconds(4);
+        UIManager.Instance.Say("Hello! I'm YOTTAMAN!",3.5f);
+        yield return new WaitForSeconds(3);
+        UIManager.Instance.Say("My power is awesome, but I get even MORE POWER with time!", 5);
+        yield return new WaitForSeconds(5.5f);
+        UIManager.Instance.Say("Oh, sorry about that, I didn't see you there!",3f);
+        yield return new WaitForSeconds(3.5f);
+        UIManager.Instance.Say("Let's say hi to our new friend, shall we?",2);
+        yield return new WaitForSeconds(2.5f);
+        Hero.Instance.GetComponent<Hero>().enabled = true;
+        UIManager.Instance.Say("MOVE: WASD / ARROWS\nTARGET: MOUSE\nSHOOT: CLICK", 100);
+        yield return new WaitUntil(() => tutorialCriminal == null);
+        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.Say("He'll be fine. Almost. Maybe.",3f);
+        yield return new WaitForSeconds(3.5f);
+        UIManager.Instance.Say("Anyway: Here comes the bride! I mean, the crime!", 4f);
+        SpawningEnemies = true;
+        yield return new WaitForSeconds(4.5f);
+        UIManager.Instance.Say("...");
+        yield return new WaitForSeconds(1);
+        UIManager.Instance.Say("... Hahaha? No? OK then.");
+    }
+
+    private IEnumerator LevelUp()
+    {
+        yield return null;
+        Time.timeScale = 0;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.LevelUp);
+
+        if (Hero.Instance.Level == 0)
+        {
+            UIManager.Instance.Say("HAHA, YEAH! MORE POWER!", 3f);
+            yield return new WaitForSecondsRealtime(3.5f);
+            UIManager.Instance.Say("More power is always better, isn't it?", 3f);
+            yield return new WaitForSecondsRealtime(2);
+        }
+        else
+        {
+            UIManager.Instance.Say("MORE POWER!... yay?", 3f);
+            yield return new WaitForSecondsRealtime(3.5f);
+            UIManager.Instance.Say("I guess I CAN be careful...", 3f);
+            yield return new WaitForSecondsRealtime(2);
+        }
+        Hero.Instance.Level += 1;
+        Time.timeScale = 1;
+    }
+
 
 }

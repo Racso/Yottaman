@@ -8,19 +8,19 @@ AnimatorOverrideController:
   m_Name: JetpackAnimation
   m_Controller: {fileID: 9100000, guid: 67b52c2798369724e986e4d641dbf4c4, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: 74298418985293564, guid: aff754e42d236fe41aa12245b8e78ad4,
+  - m_OriginalClip: {fileID: 74312261446830974, guid: aff754e42d236fe41aa12245b8e78ad4,
       type: 2}
-    m_OverrideClip: {fileID: 74091083395921270, guid: ff9f18c05eb2dda439cb95a7d944df7e,
+    m_OverrideClip: {fileID: 74618093222507426, guid: ff9f18c05eb2dda439cb95a7d944df7e,
       type: 2}
-  - m_OriginalClip: {fileID: 74092694481094032, guid: aff754e42d236fe41aa12245b8e78ad4,
+  - m_OriginalClip: {fileID: 74183487425717918, guid: aff754e42d236fe41aa12245b8e78ad4,
       type: 2}
-    m_OverrideClip: {fileID: 74581555935580680, guid: ff9f18c05eb2dda439cb95a7d944df7e,
+    m_OverrideClip: {fileID: 74115782071447030, guid: ff9f18c05eb2dda439cb95a7d944df7e,
       type: 2}
-  - m_OriginalClip: {fileID: 74824478056340204, guid: aff754e42d236fe41aa12245b8e78ad4,
+  - m_OriginalClip: {fileID: 74009772582970034, guid: aff754e42d236fe41aa12245b8e78ad4,
       type: 2}
-    m_OverrideClip: {fileID: 74584307886541122, guid: ff9f18c05eb2dda439cb95a7d944df7e,
+    m_OverrideClip: {fileID: 74626574972756222, guid: ff9f18c05eb2dda439cb95a7d944df7e,
       type: 2}
-  - m_OriginalClip: {fileID: 74856123165445116, guid: aff754e42d236fe41aa12245b8e78ad4,
+  - m_OriginalClip: {fileID: 74748950922838252, guid: aff754e42d236fe41aa12245b8e78ad4,
       type: 2}
-    m_OverrideClip: {fileID: 74119148274013622, guid: ff9f18c05eb2dda439cb95a7d944df7e,
+    m_OverrideClip: {fileID: 74607445231702030, guid: ff9f18c05eb2dda439cb95a7d944df7e,
       type: 2}

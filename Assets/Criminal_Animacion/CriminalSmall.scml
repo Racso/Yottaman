@@ -20,7 +20,7 @@
         <obj_info name="bone_007" type="bone" w="46.4032" h="10"/>
         <obj_info name="bone_008" type="bone" w="60.1463" h="10"/>
         <obj_info name="bone_009" type="bone" w="60.4811" h="10"/>
-        <animation id="0" name="Idle" length="1000" interval="100">
+        <animation id="0" name="Idle_Floor" length="1000" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="10" key="0"/>
@@ -310,7 +310,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="1" name="Die" length="1000" interval="100" looping="false">
+        <animation id="1" name="Die_Floor" length="1000" interval="100" looping="false">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="10" key="0"/>
@@ -518,7 +518,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="2" name="Attacking" length="400" interval="100" looping="false">
+        <animation id="2" name="Attacking_Floor" length="400" interval="100" looping="false">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="8" key="0"/>
@@ -644,7 +644,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="3" name="Walking" length="400" interval="100">
+        <animation id="3" name="Walking_Floor" length="400" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="10" key="0"/>
@@ -1070,7 +1070,7 @@
         <obj_info name="bone_007" type="bone" w="46.4032" h="10"/>
         <obj_info name="bone_008" type="bone" w="60.1463" h="10"/>
         <obj_info name="bone_009" type="bone" w="60.4811" h="10"/>
-        <animation id="0" name="Idle" length="800" interval="100">
+        <animation id="0" name="Idle_Jetpack" length="800" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="10" key="0"/>
@@ -1308,7 +1308,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="1" name="Walking" length="800" interval="100">
+        <animation id="1" name="Walking_Jetpack" length="800" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="10" key="0"/>
@@ -1513,7 +1513,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="2" name="Die" length="1000" interval="100" looping="false">
+        <animation id="2" name="Die_Jetpack" length="1000" interval="100" looping="false">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="10" key="0"/>
@@ -1766,7 +1766,7 @@
                 </key>
             </timeline>
         </animation>
-        <animation id="3" name="Attacking" length="1000" interval="100">
+        <animation id="3" name="Attacking_Jetpack" length="1000" interval="100">
             <mainline>
                 <key id="0">
                     <bone_ref id="0" timeline="8" key="0"/>

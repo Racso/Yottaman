@@ -17,7 +17,8 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip ExplosionHard;
     public AudioClip Shield;
     public AudioClip ExplosionGlobal;
-    
+    public AudioClip LevelUp;
+
     void Start()
     {
 

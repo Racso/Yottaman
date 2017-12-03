@@ -26,4 +26,9 @@ public class CameraManager : Singleton<CameraManager> {
 		shaker.Shake (time);
 	}
 
+    public void FocusOnGameOver(Vector3 position)
+    {
+
+    }
+
 }

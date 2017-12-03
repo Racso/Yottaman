@@ -15,6 +15,7 @@ public class HeroLaser : HeroSkill
 
     void Update()
     {
+        if (!_hero.enabled) { return; }
         if (Input.GetButton("Fire1") && !_isInCooldown)
         {
             _isInCooldown = true;

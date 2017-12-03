@@ -24,6 +24,7 @@ public class CivilianHealth : Health {
         else
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.Die2);
+            UIManager.Instance.SaySorryEnemy();
         }
         StartCoroutine(Coroutine_Die());
     }
