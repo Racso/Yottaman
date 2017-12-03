@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
 
-    public Enemy PrefabCriminal;
-    public List<Transform> SpawnPoints;
+    public Enemy PrefabSuelo;
+    public Enemy PrefabJetpack;
 
     private Vector2 TimeForCivilians = new Vector2(0.2f, 3f);
     private Vector2 TimeForCriminals = new Vector2(3f, 5f);
@@ -27,12 +27,39 @@ public class GameManager : MonoBehaviour {
         {
             yield return new WaitForSeconds(Random.Range(TimeForCriminals.x, TimeForCriminals.y));
 
-            var newCriminal = Instantiate(PrefabCriminal) as EnemyFloor;
-            int startingPoint = Random.Range(0, SpawnPoints.Count);
-            newCriminal.transform.position = SpawnPoints[startingPoint].position;
-            newCriminal.Points = SpawnPoints;
+            var criminalType = 1; // Random.Range(0, 2);
+
+            if (criminalType == 0)
+            {
+                SpawnFloor();
+            }
+            else
+            {
+                SpawnJetpack();
+            }
+
         }
     }
 
+
+    public void SpawnFloor()
+    {
+        var newCriminal = Instantiate(PrefabSuelo) as EnemyFloor;
+        newCriminal.Points.Add(Scenario.Instance.BottomLeft);
+        newCriminal.Points.Add(Scenario.Instance.BottomRight);
+        int startingSide = Random.Range(0, 2);
+        newCriminal.transform.position = newCriminal.Points[startingSide].position;
+    }
+
+    public void SpawnJetpack()
+    {
+        var newCriminal = Instantiate(PrefabJetpack) as EnemyFloor;
+        newCriminal.Points.Add(Scenario.Instance.BottomLeft);
+        newCriminal.Points.Add(Scenario.Instance.TopRight);
+        int startingSide = Random.Range(0, 2);
+        newCriminal.transform.position = startingSide == 0 ?
+            Scenario.Instance.BottomLeft.position.RandomBetween(Scenario.Instance.TopLeft.position) :
+            Scenario.Instance.BottomRight.position.RandomBetween(Scenario.Instance.TopRight.position);
+    }
 
 }

@@ -10,13 +10,14 @@ public class EnemyFloor : Enemy {
     private float AttackRange = 400;
     private float AttackCooldown = 5;
 
-    public List<Transform> Points;
+    public List<Transform> Points = new List<Transform>();
 
 
     public Vector2 TimeBetweenPositionChanges;
 
 	public override void Start () {
         base.Start();
+
         StartCoroutine(Routine_ChangeLocation());
         StartCoroutine(Routine_Attack());
     }
