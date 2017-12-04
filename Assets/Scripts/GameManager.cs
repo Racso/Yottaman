@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager> {
     private bool SpawningEnemies = false;
     private bool InGameOver = false;
 
-    private List<Vector2> TimeForCriminals = new List<Vector2> { new Vector2(1f, 5f), new Vector2(1f, 2f), new Vector2(0.5f, 1.5f) };
+    private List<Vector2> TimeForCriminals = new List<Vector2> { new Vector2(1f, 4f), new Vector2(1f, 2f), new Vector2(1f, 1.5f) };
 
     public GameObject FirePrefab;
 
@@ -118,8 +118,8 @@ public class GameManager : Singleton<GameManager> {
 
     private int NextLevelUp()
     {
-        if (Hero.Instance.Level == 0) { return 85; }
-        if (Hero.Instance.Level == 1) { return 35; }
+        if (Hero.Instance.Level == 0) { return 80; }
+        if (Hero.Instance.Level == 1) { return 20; }
         return -999999;
     }
 
