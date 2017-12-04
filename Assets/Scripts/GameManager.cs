@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager> {
         var newFire = Instantiate(FirePrefab);
         newFire.transform.position = position;
         DamageToProperty += 1;
-        if (DamageToProperty >= 20)
+        if (DamageToProperty >= 10)
         {
             GameOverByFire(position);
         }
@@ -119,7 +119,7 @@ public class GameManager : Singleton<GameManager> {
     private int NextLevelUp()
     {
         if (Hero.Instance.Level == 0) { return 85; }
-        if (Hero.Instance.Level == 1) { return 50; }
+        if (Hero.Instance.Level == 1) { return 35; }
         return -999999;
     }
 
@@ -168,14 +168,14 @@ public class GameManager : Singleton<GameManager> {
         {
             UIManager.Instance.Say("HAHA, YEAH! MORE POWER!", 3f);
             yield return new WaitForSecondsRealtime(3.5f);
-            UIManager.Instance.Say("More power is always better, isn't it?", 3f);
+            UIManager.Instance.Say("MORE power can't be WORSE, can it?", 3f);
             yield return new WaitForSecondsRealtime(2);
         }
         else
         {
-            UIManager.Instance.Say("MORE POWER!... yay?", 3f);
+            UIManager.Instance.Say("MORE POWER!?!?...", 3f);
             yield return new WaitForSecondsRealtime(3.5f);
-            UIManager.Instance.Say("I guess I CAN be careful...", 3f);
+            UIManager.Instance.Say("Well, how bad could it get?", 3f);
             yield return new WaitForSecondsRealtime(2);
         }
         Hero.Instance.Level += 1;

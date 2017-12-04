@@ -92,11 +92,33 @@ public class UIManager : Singleton<UIManager>
     {
         var strings = new string[] {
             "Woa, sorry about that!",
+            "Hey, dude, sorry about that!",
+            "Woa, I'm sorry!",
+            "Woa, I'm so sorry!",
             "That'll probably leave a mark...",
-            "Humm...",
+            "That probably stung...",
+            "Hey dude, I... Well, he isn't listening.",
+            "Hey dude, I... Well, he isn't looking.",
             "Oh, bollocks!",
+            "Oh, for my own sake!",
             "I hope you weren't using your face...",
             "Were you planning to have kids?",
+            "He'll recover. I'm sure.",
+            "Well, at least he wasn't the Pope.",
+            "Well, at least he wasn't the President.",
+            "Well, at least he wasn't me.",
+            "He had choosen... poorly.",
+            "Hum, I felt that.",
+            "Look at the brighside... Hello?",
+            "That was probably a bit too much.",
+            "I think he said something about an itch.",
+            "I think he said something about a glitch.",
+            "I think he said something about a witch.",
+            "I think he said something about a locker.",
+            "I think he said something about a peach.",
+            "I think he said something about a duck.",
+            "I think he said something about a truck.",
+            "I think he said something about luck.",
         };
         Say(strings[Random.Range(0, strings.Length)]);
     }
@@ -108,6 +130,11 @@ public class UIManager : Singleton<UIManager>
             "I think I'll need to call the firemen...",
             "Humm...",
             "I'm quite sure that fire was already there.",
+            "It's OK. The forecast predicted rain. I think.",
+            "It's just some fire.",
+            "It's a small fire. Probably won't get big.",
+            "It was getting cold anyway. Kind of.",
+            "I've chosen... poorly.",
         };
         Say(strings[Random.Range(0, strings.Length)]);
     }
@@ -117,7 +144,9 @@ public class UIManager : Singleton<UIManager>
         var strings = new string[] {
             "I should've accepted that Jenga night.",
             "Well, that's it for today, I guess.",
-            "There you go. No more crime. Ever.",
+            "Aw man, I wanted to watch the World Cup!",
+            "The brightside: No more crime. Ever.",
+            "So... Time to look for a new job, I guess.",
             "Okay... sh*t.",
         };
         Say(strings[Random.Range(0, strings.Length)], 100);
@@ -137,9 +166,11 @@ public class UIManager : Singleton<UIManager>
     public void SayPreGameOver()
     {
         var strings = new string[] {
-            "OH, NO...",
+            "OH, NO, NO, NO...!",
             "THAT DOESN'T LOOK GOOD AT ALL.",
             "OH, CRAP.",
+            "OH, NOT AGAIN!",
+            "NOOOOOOOO!!!",
         };
         Say(strings[Random.Range(0, strings.Length)]);
     }

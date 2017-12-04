@@ -44,11 +44,11 @@ TagManager:
   - name: Edificios
     uniqueID: 2383195743
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Props
     uniqueID: 656903763
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Enemigos
     uniqueID: 1554074541
