@@ -103,7 +103,7 @@ MonoBehaviour:
   Damage: 2
   Targets:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 6400
   Speed: 1800
 --- !u!198 &198738951439971824
 ParticleSystem:

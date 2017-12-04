@@ -12,15 +12,21 @@ public class CivilianHealth : Health {
 	
     public override void Hit(int damage, Bullet bullet)
     {
-        Destroy(bullet.gameObject);
         _anim.SetBool("dying", true);
         var enemy = GetComponent<Enemy>();
         enemy.StopAllCoroutines();
         enemy.enabled = false;
         enemy.PointerWhenAttacking.gameObject.SetActive(false);
-        if (damage < 2)
+        if (damage == 1)
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.Die1);
+            Destroy(bullet.gameObject);
+        }
+        else if (damage == 2 || damage == 4)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.Die2);
+            UIManager.Instance.SaySorryEnemy();
+            Destroy(bullet.gameObject);
         }
         else
         {

@@ -8,6 +8,8 @@ public class GameManager : Singleton<GameManager> {
     public int EnemiesLeft;
     private int TotalEnemies;
 
+    public int DamageToProperty;
+
     public Enemy PrefabSuelo;
     public Enemy PrefabJetpack;
 
@@ -17,6 +19,20 @@ public class GameManager : Singleton<GameManager> {
     private bool InGameOver = false;
 
     private Vector2 TimeForCriminals = new Vector2(0.5f, 1f);
+
+    public GameObject FirePrefab;
+
+    public void PropertyDamaged(Vector3 position)
+    {
+        var newFire = Instantiate(FirePrefab);
+        newFire.transform.position = position;
+        DamageToProperty += 1;
+        if (DamageToProperty >= 20)
+        {
+            GameOverByFire(position);
+        }
+    }
+
 
     void Start ()
     {
@@ -176,6 +192,15 @@ public class GameManager : Singleton<GameManager> {
         StartCoroutine(RoutineGameOver(positionOfGameOver));
     }
 
+
+    public void GameOverByFire(Vector3 positionOfGameOver)
+    {
+        if (InGameOver) { return; }
+        InGameOver = true;
+        StartCoroutine(RoutineGameOverFire(positionOfGameOver));
+    }
+
+
     IEnumerator RoutineGameOver(Vector3 position)
     {
         Time.timeScale = 0;
@@ -185,10 +210,38 @@ public class GameManager : Singleton<GameManager> {
         CameraManager.Instance.IsFollowing = false;
         CameraManager.Instance.transform.position = new Vector3(position.x, position.y, CameraManager.Instance.transform.position.z);
         yield return new WaitForSecondsRealtime(1);
-        Time.timeScale = 1;
+        Time.timeScale = 0.1f;
         CameraManager.Instance.Shake(4);
         yield return new WaitForSecondsRealtime(2);
         UIManager.Instance.ShowGameOverImage();
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (var bullet in FindObjectsOfType<Bullet>())
+        {
+            Destroy(bullet.gameObject);
+        }
+        StopCoroutine(SpawnerRoutine);
+        Destroy(Hero.Instance.gameObject);
+        yield return new WaitForSecondsRealtime(2);
+        UIManager.Instance.SayGameOver();
+        StopAllCoroutines();
+    }
+
+    IEnumerator RoutineGameOverFire(Vector3 position)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1);
+        UIManager.Instance.SayPreGameOver();
+        yield return new WaitForSecondsRealtime(1);
+        CameraManager.Instance.IsFollowing = false;
+        CameraManager.Instance.transform.position = new Vector3(position.x, position.y, CameraManager.Instance.transform.position.z);
+        yield return new WaitForSecondsRealtime(1);
+        Time.timeScale = 0.3f;
+        CameraManager.Instance.Shake(4);
+        yield return new WaitForSecondsRealtime(2);
+        UIManager.Instance.ShowGameOverImageFire();
         foreach (var enemy in FindObjectsOfType<Enemy>())
         {
             Destroy(enemy.gameObject);

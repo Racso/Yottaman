@@ -21,16 +21,6 @@ public class AudioManager : Singleton<AudioManager>
     public AudioClip ExplosionGlobal;
     public AudioClip LevelUp;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     public void PlayMusic()
     {
         if (MusicSource == null)

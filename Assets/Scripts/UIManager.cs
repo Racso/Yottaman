@@ -9,11 +9,13 @@ public class UIManager : Singleton<UIManager>
 
     public Text Level;
     public Text EnemiesLeft;
+    public Text DamageToProperty;
 
     public Text TxtSay;
 
     public GameObject GameOverImage;
     public GameObject GameOverImageEarthOK;
+    public GameObject GameOverImageEarthFire;
 
     private Coroutine _routine;
 
@@ -27,6 +29,7 @@ public class UIManager : Singleton<UIManager>
     {
         Level.text = "POWER LEVEL: " + PowerLevelString(Hero.Instance.Level);
         EnemiesLeft.text = "ENEMIES LEFT: " + GameManager.Instance.EnemiesLeft.ToString();
+        DamageToProperty.text = GameManager.Instance.DamageToProperty == 0 ? "" : "DAMAGE TO PROPERTY: " + GameManager.Instance.DamageToProperty.ToString();
     }
 
     public void Say(string msg)
@@ -63,6 +66,12 @@ public class UIManager : Singleton<UIManager>
 
     public void ShowGameOverImage()
     {
+        StartCoroutine(RoutineShowGameOver());
+    }
+
+    public void ShowGameOverImageFire()
+    {
+        GameOverImageEarthFire.SetActive(true);
         StartCoroutine(RoutineShowGameOver());
     }
 
@@ -117,5 +126,6 @@ public class UIManager : Singleton<UIManager>
         };
         Say(strings[Random.Range(0, strings.Length)]);
     }
+
 
 }
