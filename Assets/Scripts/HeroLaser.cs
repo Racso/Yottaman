@@ -8,7 +8,7 @@ public class HeroLaser : HeroSkill
 
     public Transform LaserPosition;
 
-    private float _cooldown = 1f;
+    private float _cooldown = 0.5f;
     private bool _isInCooldown = false;
 
     public List<Bullet> BulletPrefabsPerLevel;
@@ -16,7 +16,12 @@ public class HeroLaser : HeroSkill
     void Update()
     {
         if (!_hero.enabled) { return; }
-        if (Input.GetButton("Fire1") && !_isInCooldown)
+        if (Input.GetButtonUp("Fire1"))
+        {
+            _isInCooldown = false;
+            StopAllCoroutines();
+        }
+        if (Input.GetButtonDown("Fire1") || Input.GetButton("Fire1") && !_isInCooldown)
         {
             _isInCooldown = true;
             StartCoroutine(Routine_Cooldown());

@@ -69,6 +69,12 @@ public class UIManager : Singleton<UIManager>
         StartCoroutine(RoutineShowGameOver());
     }
 
+    public void ShowGameOverImageWin()
+    {
+        GameOverImage.gameObject.SetActive(true);
+        SayWon();
+    }
+
     public void ShowGameOverImageFire()
     {
         GameOverImageEarthFire.SetActive(true);
@@ -113,6 +119,17 @@ public class UIManager : Singleton<UIManager>
             "Well, that's it for today, I guess.",
             "There you go. No more crime. Ever.",
             "Okay... sh*t.",
+        };
+        Say(strings[Random.Range(0, strings.Length)], 100);
+    }
+
+    public void SayWon()
+    {
+        var strings = new string[] {
+            "HAHA! Told you: I'm awesome!",
+            "How about THAT? Earth is safe!",
+            "Best. Hero. Ever.",
+            "I should be called Awesomeman!",
         };
         Say(strings[Random.Range(0, strings.Length)], 100);
     }

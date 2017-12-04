@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81fc8bfeb4696b4fb04d8670a6e8a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemiesLeft: 30
+  EnemiesLeft: 100
   DamageToProperty: 0
   PrefabSuelo: {fileID: 114764965793491052, guid: f832fe9119dc14a4d96f395ea066efbd,
     type: 2}
@@ -532,7 +532,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4799644645428472, guid: 0aedbfccfd8b27d4d94b2babfc393182, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4799644645428472, guid: 0aedbfccfd8b27d4d94b2babfc393182, type: 2}
       propertyPath: m_LocalPosition.y
@@ -610,7 +610,7 @@ Prefab:
     - target: {fileID: 114603390418186014, guid: 0aedbfccfd8b27d4d94b2babfc393182,
         type: 2}
       propertyPath: Level
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114934086571517414, guid: 0aedbfccfd8b27d4d94b2babfc393182,
         type: 2}
@@ -707,7 +707,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 404870022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 238, z: -10}
+  m_LocalPosition: {x: 200, y: 238, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2010,7 +2010,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1393142066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 238, z: 90}
+  m_LocalPosition: {x: 200, y: 238, z: 90}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 806165824}

@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager> {
     private bool SpawningEnemies = false;
     private bool InGameOver = false;
 
-    private Vector2 TimeForCriminals = new Vector2(0.5f, 1f);
+    private List<Vector2> TimeForCriminals = new List<Vector2> { new Vector2(1f, 5f), new Vector2(1f, 3f), new Vector2(1f, 2f) };
 
     public GameObject FirePrefab;
 
@@ -59,7 +59,8 @@ public class GameManager : Singleton<GameManager> {
         {
             if (FindObjectOfType<Enemy>() == null)
             {
-                print("WON");
+                if (InGameOver) { return; }
+                InGameOver = true;
                 StartCoroutine(Win());
             }
         }
@@ -69,7 +70,7 @@ public class GameManager : Singleton<GameManager> {
     {
         while (EnemiesLeft>0)
         {
-            yield return new WaitForSeconds(Random.Range(TimeForCriminals.x, TimeForCriminals.y));
+            yield return new WaitForSeconds(Random.Range(TimeForCriminals[Hero.Instance.Level].x, TimeForCriminals[Hero.Instance.Level].y));
             if (!SpawningEnemies) { continue; }
 
             var criminalType = Random.Range(0, 2);
@@ -114,15 +115,11 @@ public class GameManager : Singleton<GameManager> {
         return newCriminal;
     }
 
-    private IEnumerator Win()
-    {
-        yield return null;
-    }
 
     private int NextLevelUp()
     {
-        if (Hero.Instance.Level == 0) { return TotalEnemies-10; }
-        if (Hero.Instance.Level == 1) { return TotalEnemies-15; }
+        if (Hero.Instance.Level == 0) { return 85; }
+        if (Hero.Instance.Level == 1) { return 50; }
         return -999999;
     }
 
@@ -201,6 +198,25 @@ public class GameManager : Singleton<GameManager> {
     }
 
 
+
+    private IEnumerator Win()
+    {
+        CameraManager.Instance.IsFollowing = false;
+        foreach (var enemy in FindObjectsOfType<Enemy>())
+        {
+            Destroy(enemy.gameObject);
+        }
+        foreach (var bullet in FindObjectsOfType<Bullet>())
+        {
+            Destroy(bullet.gameObject);
+        }
+        StopCoroutine(SpawnerRoutine);
+        Destroy(Hero.Instance.gameObject);
+        StopAllCoroutines();
+        UIManager.Instance.ShowGameOverImageWin();
+        yield return null;
+    }
+
     IEnumerator RoutineGameOver(Vector3 position)
     {
         Time.timeScale = 0;
@@ -213,6 +229,7 @@ public class GameManager : Singleton<GameManager> {
         Time.timeScale = 0.1f;
         CameraManager.Instance.Shake(4);
         yield return new WaitForSecondsRealtime(2);
+        Time.timeScale = 1;
         UIManager.Instance.ShowGameOverImage();
         foreach (var enemy in FindObjectsOfType<Enemy>())
         {
@@ -241,6 +258,7 @@ public class GameManager : Singleton<GameManager> {
         Time.timeScale = 0.3f;
         CameraManager.Instance.Shake(4);
         yield return new WaitForSecondsRealtime(2);
+        Time.timeScale = 1;
         UIManager.Instance.ShowGameOverImageFire();
         foreach (var enemy in FindObjectsOfType<Enemy>())
         {
