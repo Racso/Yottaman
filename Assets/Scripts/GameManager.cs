@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager> {
     private bool SpawningEnemies = false;
     private bool InGameOver = false;
 
-    private List<Vector2> TimeForCriminals = new List<Vector2> { new Vector2(1f, 5f), new Vector2(1f, 3f), new Vector2(1f, 2f) };
+    private List<Vector2> TimeForCriminals = new List<Vector2> { new Vector2(1f, 5f), new Vector2(1f, 2f), new Vector2(0.5f, 1.5f) };
 
     public GameObject FirePrefab;
 
@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager> {
         var newFire = Instantiate(FirePrefab);
         newFire.transform.position = position;
         DamageToProperty += 1;
-        if (DamageToProperty >= 10)
+        if (DamageToProperty >= 15)
         {
             GameOverByFire(position);
         }

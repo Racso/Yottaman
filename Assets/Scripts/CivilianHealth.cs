@@ -38,6 +38,8 @@ public class CivilianHealth : Health {
 
     IEnumerator Coroutine_Die()
     {
+        var collider = GetComponent<Collider2D>();
+        if (collider != null) { collider.enabled = false; }
         float a = 1;
         while (a>0) {
             var sprites = GetComponentsInChildren<SpriteRenderer>();
