@@ -22,13 +22,24 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         GameOverImage.SetActive(false);
+        RefreshUI();
+        StartCoroutine(Routine_UpdateUI());
     }
 
+    IEnumerator Routine_UpdateUI()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(0.3f);
+            if (enabled) { RefreshUI(); }
+        }
+    }
 
-    void Update()
+    private void RefreshUI()
     {
         Level.text = "POWER LEVEL: " + PowerLevelString(Hero.Instance.Level);
-        EnemiesLeft.text = "ENEMIES LEFT: " + GameManager.Instance.EnemiesLeft.ToString();
+        var enemies = GameManager.Instance.GetTotalRemainingEnemies();
+        EnemiesLeft.text = "ENEMIES LEFT: " + enemies.ToString();
         DamageToProperty.text = GameManager.Instance.DamageToProperty == 0 ? "" : "DAMAGE TO PROPERTY: " + GameManager.Instance.DamageToProperty.ToString();
     }
 

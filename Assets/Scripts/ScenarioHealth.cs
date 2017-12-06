@@ -8,7 +8,7 @@ public class ScenarioHealth : Health
     {
         if (damage > 1)
         {
-            GameManager.Instance.PropertyDamaged(bullet.transform.position);
+            GameManager.Instance.HandlerPropertyDamaged(bullet.transform.position);
             UIManager.Instance.SaySorryThings();
         }
         if (damage >= 4)

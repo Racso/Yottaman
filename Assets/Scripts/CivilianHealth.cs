@@ -5,18 +5,25 @@ using UnityEngine;
 public class CivilianHealth : Health {
 
     Animator _anim;
+    Enemy _enemy;
 
 	void Start () {
-        _anim = GetComponentInChildren<Animator>();	
-	}
+        _anim = GetComponentInChildren<Animator>();
+        _enemy = GetComponent<Enemy>();
+    }
 	
     public override void Hit(int damage, Bullet bullet)
     {
+        if (_enemy.enabled == false) { return; }
+
+        _enemy.enabled = false;
+        _enemy.StopAllCoroutines();
+        _enemy.PointerWhenAttacking.gameObject.SetActive(false);
+        var collider = GetComponent<Collider2D>();
+        if (collider != null) { collider.enabled = false; }
+
         _anim.SetBool("dying", true);
-        var enemy = GetComponent<Enemy>();
-        enemy.StopAllCoroutines();
-        enemy.enabled = false;
-        enemy.PointerWhenAttacking.gameObject.SetActive(false);
+
         if (damage == 1)
         {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.Die1);
@@ -33,13 +40,15 @@ public class CivilianHealth : Health {
             AudioManager.Instance.PlaySFX(AudioManager.Instance.Die2);
             UIManager.Instance.SaySorryEnemy();
         }
+
+        GameManager.Instance.HandlerEnemyDied(_enemy);
+
         StartCoroutine(Coroutine_Die());
     }
 
     IEnumerator Coroutine_Die()
     {
-        var collider = GetComponent<Collider2D>();
-        if (collider != null) { collider.enabled = false; }
+
         float a = 1;
         while (a>0) {
             var sprites = GetComponentsInChildren<SpriteRenderer>();

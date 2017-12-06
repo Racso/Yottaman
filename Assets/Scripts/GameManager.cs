@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
 
-    public int EnemiesLeft;
-    private int TotalEnemies;
+    public int EnemiesLeftToSpawn;
+    private int InitialAmountOfEnemiesToSpawn;
 
     public int DamageToProperty;
 
@@ -22,24 +23,14 @@ public class GameManager : Singleton<GameManager> {
 
     public GameObject FirePrefab;
 
-    public void PropertyDamaged(Vector3 position)
-    {
-        var newFire = Instantiate(FirePrefab);
-        newFire.transform.position = position;
-        DamageToProperty += 1;
-        if (DamageToProperty >= 15)
-        {
-            GameOverByFire(position);
-        }
-    }
-
-
     void Start ()
     {
-        TotalEnemies = EnemiesLeft;
-        AudioManager.Instance.PlayMusic();
+        InitialAmountOfEnemiesToSpawn = EnemiesLeftToSpawn;
+
         TutorialRoutine = StartCoroutine(Tutorial());
         SpawnerRoutine = StartCoroutine(Routine_SpawnCriminals());
+
+        AudioManager.Instance.PlayMusic();
     }
 	
 	void Update ()
@@ -55,20 +46,11 @@ public class GameManager : Singleton<GameManager> {
             Hero.Instance.GetComponent<Hero>().enabled = true;
             SpawningEnemies = true;
         }
-		if (EnemiesLeft < 1)
-        {
-            if (FindObjectOfType<Enemy>() == null)
-            {
-                if (InGameOver) { return; }
-                InGameOver = true;
-                StartCoroutine(Win());
-            }
-        }
 	}
 
     IEnumerator Routine_SpawnCriminals()
     {
-        while (EnemiesLeft>0)
+        while (EnemiesLeftToSpawn>0)
         {
             yield return new WaitForSeconds(Random.Range(TimeForCriminals[Hero.Instance.Level].x, TimeForCriminals[Hero.Instance.Level].y));
             if (!SpawningEnemies) { continue; }
@@ -77,24 +59,33 @@ public class GameManager : Singleton<GameManager> {
 
             if (criminalType == 0)
             {
-                SpawnFloor();
+                SpawnEnemyGround();
             }
             else
             {
-                SpawnJetpack();
+                SpawnEnemyJetpack();
             }
-
-            EnemiesLeft -= 1;
-            if (EnemiesLeft == NextLevelUp())
+            
+            if (EnemiesLeftToSpawn == NextLevelUp())
             {
                 StartCoroutine(LevelUp());
             }
         }
     }
 
-
-    public EnemyFloor SpawnFloor()
+    public int GetAliveEnemies()
     {
+        return FindObjectsOfType<Enemy>().Count(e => e.enabled);
+    }
+
+    public int GetTotalRemainingEnemies()
+    {
+        return GetAliveEnemies() + EnemiesLeftToSpawn;
+    }
+
+    public EnemyFloor SpawnEnemyGround()
+    {
+        EnemiesLeftToSpawn -= 1;
         var newCriminal = Instantiate(PrefabSuelo) as EnemyFloor;
         newCriminal.Points.Add(Scenario.Instance.BottomLeft);
         newCriminal.Points.Add(Scenario.Instance.BottomRight);
@@ -103,8 +94,9 @@ public class GameManager : Singleton<GameManager> {
         return newCriminal;
     }
 
-    public EnemyFloor SpawnJetpack()
+    public EnemyFloor SpawnEnemyJetpack()
     {
+        EnemiesLeftToSpawn -= 1;
         var newCriminal = Instantiate(PrefabJetpack) as EnemyFloor;
         newCriminal.Points.Add(Scenario.Instance.BottomLeft);
         newCriminal.Points.Add(Scenario.Instance.TopRight);
@@ -119,7 +111,7 @@ public class GameManager : Singleton<GameManager> {
     private int NextLevelUp()
     {
         if (Hero.Instance.Level == 0) { return 80; }
-        if (Hero.Instance.Level == 1) { return 20; }
+        if (Hero.Instance.Level == 1) { return 10; }
         return -999999;
     }
 
@@ -128,7 +120,7 @@ public class GameManager : Singleton<GameManager> {
     {
         yield return null;
         Hero.Instance.GetComponent<Hero>().enabled = false;
-        var tutorialCriminal = SpawnFloor();
+        var tutorialCriminal = SpawnEnemyGround();
         var newPos = tutorialCriminal.transform.position;
         newPos.x = 0;
         tutorialCriminal.transform.position = newPos;
@@ -198,18 +190,48 @@ public class GameManager : Singleton<GameManager> {
     }
 
 
-
-    private IEnumerator Win()
+    private void CleanBulletsAndEnemies()
     {
-        CameraManager.Instance.IsFollowing = false;
-        foreach (var enemy in FindObjectsOfType<Enemy>())
-        {
-            Destroy(enemy.gameObject);
-        }
         foreach (var bullet in FindObjectsOfType<Bullet>())
         {
             Destroy(bullet.gameObject);
         }
+
+        var enemiesAlive = FindObjectsOfType<Enemy>();
+        EnemiesLeftToSpawn += enemiesAlive.Count(e => e.enabled);
+
+        foreach (var enemy in enemiesAlive)
+        {
+            Destroy(enemy);
+        }
+
+    }
+
+    public void HandlerEnemyDied(Enemy enemy)
+    {
+        if (GetTotalRemainingEnemies() == 0 && !InGameOver)
+        {
+            InGameOver = true;
+            StartCoroutine(RoutineWin());
+        }
+    }
+
+    public void HandlerPropertyDamaged(Vector3 position)
+    {
+        var newFire = Instantiate(FirePrefab);
+        newFire.transform.position = position;
+        DamageToProperty += 1;
+        if (DamageToProperty >= 15)
+        {
+            GameOverByFire(position);
+        }
+    }
+
+
+    private IEnumerator RoutineWin()
+    {
+        CameraManager.Instance.IsFollowing = false;
+        CleanBulletsAndEnemies();
         StopCoroutine(SpawnerRoutine);
         Destroy(Hero.Instance.gameObject);
         StopAllCoroutines();
@@ -231,14 +253,7 @@ public class GameManager : Singleton<GameManager> {
         yield return new WaitForSecondsRealtime(2);
         Time.timeScale = 1;
         UIManager.Instance.ShowGameOverImage();
-        foreach (var enemy in FindObjectsOfType<Enemy>())
-        {
-            Destroy(enemy.gameObject);
-        }
-        foreach (var bullet in FindObjectsOfType<Bullet>())
-        {
-            Destroy(bullet.gameObject);
-        }
+        CleanBulletsAndEnemies();
         StopCoroutine(SpawnerRoutine);
         Destroy(Hero.Instance.gameObject);
         yield return new WaitForSecondsRealtime(2);
@@ -260,14 +275,7 @@ public class GameManager : Singleton<GameManager> {
         yield return new WaitForSecondsRealtime(2);
         Time.timeScale = 1;
         UIManager.Instance.ShowGameOverImageFire();
-        foreach (var enemy in FindObjectsOfType<Enemy>())
-        {
-            Destroy(enemy.gameObject);
-        }
-        foreach (var bullet in FindObjectsOfType<Bullet>())
-        {
-            Destroy(bullet.gameObject);
-        }
+        CleanBulletsAndEnemies();
         StopCoroutine(SpawnerRoutine);
         Destroy(Hero.Instance.gameObject);
         yield return new WaitForSecondsRealtime(2);

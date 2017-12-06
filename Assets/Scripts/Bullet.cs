@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour
 
     private float MaxDistanceBeforeDestroy = 5000f;
     Rigidbody2D _rb;
-
+    
     public void SetBullet(Vector3 startingPoint, GameObject target)
     {
         SetBullet(startingPoint, target.TargetCenter());
@@ -30,7 +30,6 @@ public class Bullet : MonoBehaviour
         if (!Targets.ContainsObject(collision.gameObject)) { return; }
         Health victimHealth = collision.GetComponent<Health>();
         victimHealth.Hit(Damage, this);
-        
     }
 
     void Update()

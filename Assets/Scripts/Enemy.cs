@@ -12,9 +12,7 @@ public class Enemy : MonoBehaviour
     public Pointer PointerWhenAttacking;
 
     private GameObject AttackTarget;
-
-    public bool IsDying;
-
+  
     Animator _anim;
 
     private bool _attacking = false;
