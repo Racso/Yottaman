@@ -483,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81fc8bfeb4696b4fb04d8670a6e8a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemiesLeft: 100
+  EnemiesLeft: 60
   DamageToProperty: 0
   PrefabSuelo: {fileID: 114764965793491052, guid: f832fe9119dc14a4d96f395ea066efbd,
     type: 2}

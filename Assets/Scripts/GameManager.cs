@@ -26,8 +26,8 @@ public class GameManager : Singleton<GameManager> {
     {
         var newFire = Instantiate(FirePrefab);
         newFire.transform.position = position;
-        DamageToProperty += 1;
-        if (DamageToProperty >= 15)
+        DamageToProperty = Mathf.Max(0, DamageToProperty - 1);
+        if (DamageToProperty == 0)
         {
             GameOverByFire(position);
         }
@@ -36,6 +36,7 @@ public class GameManager : Singleton<GameManager> {
 
     void Start ()
     {
+        DamageToProperty = 15;
         TotalEnemies = EnemiesLeft;
         AudioManager.Instance.PlayMusic();
         TutorialRoutine = StartCoroutine(Tutorial());
@@ -118,8 +119,8 @@ public class GameManager : Singleton<GameManager> {
 
     private int NextLevelUp()
     {
-        if (Hero.Instance.Level == 0) { return 80; }
-        if (Hero.Instance.Level == 1) { return 20; }
+        if (Hero.Instance.Level == 0) { return 45; }
+        if (Hero.Instance.Level == 1) { return 10; }
         return -999999;
     }
 

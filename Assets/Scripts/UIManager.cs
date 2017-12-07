@@ -28,8 +28,8 @@ public class UIManager : Singleton<UIManager>
     void Update()
     {
         Level.text = "POWER LEVEL: " + PowerLevelString(Hero.Instance.Level);
-        EnemiesLeft.text = "ENEMIES LEFT: " + GameManager.Instance.EnemiesLeft.ToString();
-        DamageToProperty.text = GameManager.Instance.DamageToProperty == 0 ? "" : "DAMAGE TO PROPERTY: " + GameManager.Instance.DamageToProperty.ToString();
+        EnemiesLeft.text = "ENEMIES IN BASE: " + GameManager.Instance.EnemiesLeft.ToString();
+        DamageToProperty.text = "WORLD DAMAGE LEFT: " + GameManager.Instance.DamageToProperty.ToString();
     }
 
     public void Say(string msg)
@@ -60,7 +60,7 @@ public class UIManager : Singleton<UIManager>
             case 1:
                 return "Dangerous";
             default:
-                return "9001";
+                return "Apocalyptic";
         }
     }
 
