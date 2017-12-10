@@ -2,92 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
 
-    public float RunningSpeed;
-    public LinearProjectile BulletPrefab;
-
-    public Vector3 NextPoint;
-    public RotateTowardsTarget PointerWhenAttacking;
-
-    private GameObject AttackTarget;
-  
-    Animator _anim;
-
-    private bool _attacking = false;
+    protected Animator animator;
 
     public virtual void Start()
     {
-        _anim = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-    void Update()
-    {
-        _anim.SetBool("walking", false);
+    public abstract bool IsAttacking();
+    public abstract bool IsMoving();
 
-        if (IsMoving())
-        {
-            var direction = NextPoint - transform.position;
-            var distanceToMove = RunningSpeed * Time.deltaTime;
-            if (distanceToMove > direction.magnitude)
-            {
-                transform.position = NextPoint;
-            }
-            else
-            {
-                transform.Translate(direction.normalized * RunningSpeed * Time.deltaTime);
-            }
-
-            var newScale = transform.localScale;
-            newScale.x = Mathf.Abs(newScale.x) * Mathf.Sign(direction.x);
-            transform.localScale = newScale;
-
-            _anim.SetBool("walking", true);
-        }
-        else if (IsAttacking() && AttackTarget != null)
-        {
-            transform.localScale = transform.LocalScaleLookingTowards(AttackTarget.transform.position);
-        }
-    }
-
-    public virtual void Attack(GameObject target)
-    {
-        if (IsAttacking()) { return; }
-        StartCoroutine(Routine_Attack(target));
-    }
-
-    public IEnumerator Routine_Attack(GameObject target)
-    {
-        _attacking = true;
-        AttackTarget = target;
-        _anim.SetBool("attacking", true);
-        PointerWhenAttacking.SetTarget(target);
-
-        yield return new WaitForSeconds(0.5f);
-
-        var newBullet = Instantiate(BulletPrefab);
-        PointerWhenAttacking.Paused = true;
-        newBullet.SetBullet(PointerWhenAttacking.HotPoint.transform.position, target);
-        AudioManager.Instance.PlaySFX(AudioManager.Instance.Shoot);
-
-        yield return new WaitForSeconds(0.2f);
-
-        _anim.SetBool("attacking", false);
-        PointerWhenAttacking.SetTarget(null);
-
-        _attacking = false;
-        AttackTarget = null;
-    }
-
-    public bool IsAttacking()
-    {
-        return _attacking;
-    }
-
-    public bool IsMoving()
-    {
-        return !transform.position.IsCloseEnoughTo(NextPoint);
-    }
+    public abstract void HitHandler(int damage, LinearProjectile bullet);
 
 }

@@ -887,16 +887,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d41481596319bcc408a03387203cc717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunningSpeed: 900
-  BulletPrefab: {fileID: 114375313796155624, guid: 732f4d1649a9ce54f87c85065192c17e,
-    type: 2}
-  NextPoint: {x: 0, y: 0, z: 0}
-  PointerWhenAttacking: {fileID: 114911160917619214}
-  IsDying: 0
+  MovingSpeed: 800
+  AttackRange: 600
+  AttackCooldown: 5
   LayerVictims:
     serializedVersion: 2
     m_Bits: 1536
-  Points: []
+  ShootingBulletPrefab: {fileID: 114375313796155624, guid: 732f4d1649a9ce54f87c85065192c17e,
+    type: 2}
+  PointerWhenAttacking: {fileID: 114911160917619214}
+  CornersOfMovingArea: []
   TimeBetweenPositionChanges: {x: 5, y: 15}
 --- !u!114 &114518569740044464
 MonoBehaviour:

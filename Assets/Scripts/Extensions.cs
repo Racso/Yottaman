@@ -12,9 +12,9 @@ public static class Extensions
         return (position - other).magnitude <= Zero;
     }
 
-    public static Vector3 RandomBetween(this Vector3 a, Vector3 b)
+    public static Vector3 RandomPointBetween(Vector3 pointA, Vector3 pointB)
     {
-        return new Vector3(Random.Range(a.x, b.x), Random.Range(a.y, b.y));
+        return new Vector3(Random.Range(pointA.x, pointB.x), Random.Range(pointA.y, pointB.y), Random.Range(pointA.z, pointB.z));
     }
 
     public static Vector3 TargetCenter(this GameObject go)
@@ -32,7 +32,12 @@ public static class Extensions
     public static Vector3 LocalScaleLookingTowards(this Transform transform, Vector3 to)
     {
         float lookTo = Mathf.Sign(to.x - transform.position.x);
-        if (lookTo == 0) { lookTo = 1; }
+        if (lookTo == 0) { lookTo = transform.localScale.x; }
         return new Vector3(lookTo, transform.localScale.y, transform.localScale.z);
+    }
+
+    public static void FlipToLookTo(this Transform gameobject, Vector3 to)
+    {
+        gameobject.transform.localScale = gameobject.transform.LocalScaleLookingTowards(to);
     }
 }
