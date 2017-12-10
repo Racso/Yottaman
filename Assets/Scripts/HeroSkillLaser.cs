@@ -27,7 +27,7 @@ public class HeroSkillLaser : HeroSkill
             StartCoroutine(Routine_Cooldown());
 
             var newLaser = Instantiate(BulletPrefabsPerLevel[_hero.Level]);
-            newLaser.SetBullet(LaserPosition.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            newLaser.InitInPositionWithTarget(LaserPosition.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             AudioManager.Instance.PlaySFX(AudioManager.Instance.Laser);
         }
 

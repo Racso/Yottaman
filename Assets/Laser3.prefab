@@ -101,9 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 4
-  Targets:
+  ImpactTargets:
     serializedVersion: 2
-    m_Bits: 6400
+    m_Bits: 6144
   Speed: 1800
 --- !u!198 &198778995920319392
 ParticleSystem:

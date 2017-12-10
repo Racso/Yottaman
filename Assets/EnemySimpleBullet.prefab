@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61550300060609480}
   - component: {fileID: 50654671836766932}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: EnemySimpleBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  Targets:
+  ImpactTargets:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 1024
   Speed: 300
 --- !u!198 &198558773197125254
 ParticleSystem:

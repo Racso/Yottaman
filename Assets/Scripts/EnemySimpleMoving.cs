@@ -118,7 +118,7 @@ public class EnemySimpleMoving : Enemy {
         yield return new WaitForSeconds(0.5f);
 
         var newBullet = Instantiate(ShootingBulletPrefab);
-        newBullet.SetBullet(PointerWhenAttacking.HotPoint.transform.position, target);
+        newBullet.InitInPositionWithTarget(PointerWhenAttacking.HotPoint.transform.position, target);
         PointerWhenAttacking.Paused = true;
         AudioManager.Instance.PlaySFX(AudioManager.Instance.Shoot);
 

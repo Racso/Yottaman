@@ -13,12 +13,12 @@ public class HealthHero : Health
         if (Hero.Instance.Level == 1)
         {
             var counterBullet = Instantiate(CounterBulletSmall);
-            counterBullet.SetBullet(bullet.transform.position, bullet.transform.position - (Vector3)bullet.GetComponent<Rigidbody2D>().velocity);
+            counterBullet.InitInPositionWithTarget(bullet.transform.position, bullet.transform.position - (Vector3)bullet.GetComponent<Rigidbody2D>().velocity);
         }
         else if (Hero.Instance.Level > 1)
         {
             var counterBullet = Instantiate(CounterBulletBig);
-            counterBullet.SetBullet(bullet.transform.position, bullet.transform.position - (Vector3)bullet.GetComponent<Rigidbody2D>().velocity);
+            counterBullet.InitInPositionWithTarget(bullet.transform.position, bullet.transform.position - (Vector3)bullet.GetComponent<Rigidbody2D>().velocity);
         }
     }
 
