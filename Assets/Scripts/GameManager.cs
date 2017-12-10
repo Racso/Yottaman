@@ -89,7 +89,7 @@ public class GameManager : Singleton<GameManager> {
         newCriminal.CornersOfMovingArea.Add(ScenarioBounds.Instance.BottomLeft);
         newCriminal.CornersOfMovingArea.Add(ScenarioBounds.Instance.BottomRight);
         int startingSide = Random.Range(0, 2);
-        newCriminal.transform.position = newCriminal.CornersOfMovingArea[startingSide].position;
+        newCriminal.transform.position = newCriminal.CornersOfMovingArea[startingSide];
         return newCriminal;
     }
 
@@ -101,8 +101,8 @@ public class GameManager : Singleton<GameManager> {
         newCriminal.CornersOfMovingArea.Add(ScenarioBounds.Instance.TopRight);
         int startingSide = Random.Range(0, 2);
         newCriminal.transform.position = startingSide == 0 ?
-            Extensions.RandomPointBetween(ScenarioBounds.Instance.BottomLeft.position, ScenarioBounds.Instance.TopLeft.position) :
-            Extensions.RandomPointBetween(ScenarioBounds.Instance.BottomRight.position, ScenarioBounds.Instance.TopRight.position);
+            Extensions.RandomPointBetween(ScenarioBounds.Instance.BottomLeft, ScenarioBounds.Instance.TopLeft) :
+            Extensions.RandomPointBetween(ScenarioBounds.Instance.BottomRight, ScenarioBounds.Instance.TopRight);
         return newCriminal;
     }
 

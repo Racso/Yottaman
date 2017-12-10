@@ -1,33 +1,60 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ScenarioBounds : Singleton<ScenarioBounds>
 {
+    public List<Transform> TwoCorners;
 
-    public List<Transform> Corners;
+    private Vector3[] corners;
 
-    public float Left
+    private void Start()
+    {
+        corners = new Vector3[4];
+        corners[Corners.TOP_LEFT] = CreateVectorFromCornersByFunctions(Mathf.Min, Mathf.Max);
+        corners[Corners.TOP_RIGHT] = CreateVectorFromCornersByFunctions(Mathf.Max, Mathf.Max);
+        corners[Corners.BOTTOM_LEFT] = CreateVectorFromCornersByFunctions(Mathf.Min, Mathf.Min);
+        corners[Corners.BOTTOM_RIGHT] = CreateVectorFromCornersByFunctions(Mathf.Max, Mathf.Min);
+    }
+
+    private Vector3 CreateVectorFromCornersByFunctions(Func<float, float, float> functionForX, Func<float, float, float> functionForY)
+    {
+        float x = functionForX(TwoCorners[0].position.x, TwoCorners[1].position.x);
+        float y = functionForY(TwoCorners[0].position.y, TwoCorners[1].position.y);
+        float z = TwoCorners[0].position.z;
+        return new Vector3(x, y, z);
+    }
+
+    public Vector3 TopLeft
     {
         get
         {
-            return Mathf.Min(Corners[0].position.x, Corners[1].position.x);
+            return corners[Corners.TOP_LEFT];
         }
     }
 
-    public float Right
+    public Vector3 TopRight
     {
         get
         {
-            return Mathf.Max(Corners[0].position.x, Corners[1].position.x);
+            return corners[Corners.TOP_RIGHT];
         }
     }
 
-    public float Top
+    public Vector3 BottomLeft
     {
         get
         {
-            return Mathf.Max(Corners[0].position.y, Corners[1].position.y);
+            return corners[Corners.BOTTOM_LEFT];
+        }
+    }
+
+    public Vector3 BottomRight
+    {
+        get
+        {
+            return corners[Corners.BOTTOM_RIGHT];
         }
     }
 
@@ -35,40 +62,39 @@ public class ScenarioBounds : Singleton<ScenarioBounds>
     {
         get
         {
-            return Mathf.Min(Corners[0].position.y, Corners[1].position.y);
+            return BottomLeft.y;
         }
     }
 
-    public Transform TopLeft
+    public float Left
     {
         get
         {
-            return Corners[0];
+            return BottomLeft.x;
         }
     }
 
-    public Transform TopRight
+    public float Top
     {
         get
         {
-            return Corners[1];
+            return TopRight.y;
         }
     }
 
-    public Transform BottomLeft
+    public float Right
     {
         get
         {
-            return Corners[2];
+            return TopRight.x;
         }
     }
 
-    public Transform BottomRight
+    private static class Corners
     {
-        get
-        {
-            return Corners[3];
-        }
+        public const int TOP_LEFT = 0;
+        public const int TOP_RIGHT = 1;
+        public const int BOTTOM_RIGHT = 2;
+        public const int BOTTOM_LEFT = 3;
     }
-
 }

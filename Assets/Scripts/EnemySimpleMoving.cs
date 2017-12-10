@@ -15,7 +15,7 @@ public class EnemySimpleMoving : Enemy {
     private Vector3 MovementTargetPosition;
     private GameObject AttackTarget;
 
-    public List<Transform> CornersOfMovingArea = new List<Transform>();
+    public List<Vector3> CornersOfMovingArea = new List<Vector3>();
 
 
 	public override void Start () {
@@ -43,7 +43,7 @@ public class EnemySimpleMoving : Enemy {
 
     private void SetNewTargetLocation()
     {
-        MovementTargetPosition = Extensions.RandomPointBetween(CornersOfMovingArea[0].position, CornersOfMovingArea[1].position);
+        MovementTargetPosition = Extensions.RandomPointBetween(CornersOfMovingArea[0], CornersOfMovingArea[1]);
     }
 
     private float RandomSecondsBetweenChangingLocations()
