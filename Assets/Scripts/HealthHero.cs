@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HeroHealth : Health
+public class HealthHero : Health
 {
-    public Bullet CounterBulletSmall;
-    public Bullet CounterBulletBig;
+    public LinearProjectile CounterBulletSmall;
+    public LinearProjectile CounterBulletBig;
 
-    public override void Hit(int damage, Bullet bullet)
+    public override void Hit(int damage, LinearProjectile bullet)
     {
         DestroyObject(bullet.gameObject);
         AudioManager.Instance.PlaySFX(AudioManager.Instance.Shield);

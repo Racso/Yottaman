@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFloor : Enemy {
+public class EnemySimpleMoving : Enemy {
 
 
     public LayerMask LayerVictims;

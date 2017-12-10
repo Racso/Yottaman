@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScenarioHealth : Health
+public class HealthScenario : Health
 {
 
-    public override void Hit(int damage, Bullet bullet)
+    public override void Hit(int damage, LinearProjectile bullet)
     {
         if (damage > 1)
         {

@@ -83,27 +83,27 @@ public class GameManager : Singleton<GameManager> {
         return GetAliveEnemies() + EnemiesLeftToSpawn;
     }
 
-    public EnemyFloor SpawnEnemyGround()
+    public EnemySimpleMoving SpawnEnemyGround()
     {
         EnemiesLeftToSpawn -= 1;
-        var newCriminal = Instantiate(PrefabSuelo) as EnemyFloor;
-        newCriminal.Points.Add(Scenario.Instance.BottomLeft);
-        newCriminal.Points.Add(Scenario.Instance.BottomRight);
+        var newCriminal = Instantiate(PrefabSuelo) as EnemySimpleMoving;
+        newCriminal.Points.Add(ScenarioBounds.Instance.BottomLeft);
+        newCriminal.Points.Add(ScenarioBounds.Instance.BottomRight);
         int startingSide = Random.Range(0, 2);
         newCriminal.transform.position = newCriminal.Points[startingSide].position;
         return newCriminal;
     }
 
-    public EnemyFloor SpawnEnemyJetpack()
+    public EnemySimpleMoving SpawnEnemyJetpack()
     {
         EnemiesLeftToSpawn -= 1;
-        var newCriminal = Instantiate(PrefabJetpack) as EnemyFloor;
-        newCriminal.Points.Add(Scenario.Instance.BottomLeft);
-        newCriminal.Points.Add(Scenario.Instance.TopRight);
+        var newCriminal = Instantiate(PrefabJetpack) as EnemySimpleMoving;
+        newCriminal.Points.Add(ScenarioBounds.Instance.BottomLeft);
+        newCriminal.Points.Add(ScenarioBounds.Instance.TopRight);
         int startingSide = Random.Range(0, 2);
         newCriminal.transform.position = startingSide == 0 ?
-            Scenario.Instance.BottomLeft.position.RandomBetween(Scenario.Instance.TopLeft.position) :
-            Scenario.Instance.BottomRight.position.RandomBetween(Scenario.Instance.TopRight.position);
+            ScenarioBounds.Instance.BottomLeft.position.RandomBetween(ScenarioBounds.Instance.TopLeft.position) :
+            ScenarioBounds.Instance.BottomRight.position.RandomBetween(ScenarioBounds.Instance.TopRight.position);
         return newCriminal;
     }
 
@@ -192,7 +192,7 @@ public class GameManager : Singleton<GameManager> {
 
     private void CleanBulletsAndEnemies()
     {
-        foreach (var bullet in FindObjectsOfType<Bullet>())
+        foreach (var bullet in FindObjectsOfType<LinearProjectile>())
         {
             Destroy(bullet.gameObject);
         }

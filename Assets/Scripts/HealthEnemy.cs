@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CivilianHealth : Health {
+public class HealthEnemy : Health {
 
     Animator _anim;
     Enemy _enemy;
@@ -12,7 +12,7 @@ public class CivilianHealth : Health {
         _enemy = GetComponent<Enemy>();
     }
 	
-    public override void Hit(int damage, Bullet bullet)
+    public override void Hit(int damage, LinearProjectile bullet)
     {
         if (_enemy.enabled == false) { return; }
 
