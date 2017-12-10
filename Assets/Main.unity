@@ -332,6 +332,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+--- !u!4 &136727729 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4703004009281004, guid: 0aedbfccfd8b27d4d94b2babfc393182,
+    type: 2}
+  m_PrefabInternal: {fileID: 366489295}
 --- !u!1001 &283571466
 Prefab:
   m_ObjectHideFlags: 0
@@ -770,6 +775,11 @@ Prefab:
       value: 
       objectReference: {fileID: 114482978456064916, guid: 5de94240323daf142ae0e2d91588ff65,
         type: 2}
+    - target: {fileID: 114480437439895270, guid: 0aedbfccfd8b27d4d94b2babfc393182,
+        type: 2}
+      propertyPath: LasersInitialPosition
+      value: 
+      objectReference: {fileID: 136727729}
     m_RemovedComponents:
     - {fileID: 212404642516717238, guid: 0aedbfccfd8b27d4d94b2babfc393182, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 0aedbfccfd8b27d4d94b2babfc393182, type: 2}

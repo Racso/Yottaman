@@ -6,37 +6,60 @@ using System;
 public class HeroSkillLaser : HeroSkill
 {
 
-    public Transform LaserPosition;
-
-    private float _cooldown = 0.5f;
-    private bool _isInCooldown = false;
-
+    public Transform LasersInitialPosition;
+    public float cooldownWhenPressed = 0.5f;
     public List<LinearProjectile> BulletPrefabsPerLevel;
+
+    private string LaserButton = "Fire1";
+    private string SkillAnimationName = "laser";
+    private bool isInCooldown = false;
 
     void Update()
     {
-        if (!_hero.enabled) { return; }
-        if (Input.GetButtonUp("Fire1"))
+        if (!hero.enabled) { return; }
+
+        QuickResetCooldownIfPossible();
+        ShootIfPossible();
+
+        hero.UpdateSkillAnimation(SkillAnimationName, InputIsTryingToShoot());
+    }
+
+    private void QuickResetCooldownIfPossible()
+    {
+        if (Input.GetButtonUp(LaserButton))
         {
-            _isInCooldown = false;
+            isInCooldown = false;
             StopAllCoroutines();
         }
-        if (Input.GetButtonDown("Fire1") || Input.GetButton("Fire1") && !_isInCooldown)
-        {
-            _isInCooldown = true;
-            StartCoroutine(Routine_Cooldown());
-
-            var newLaser = Instantiate(BulletPrefabsPerLevel[_hero.Level]);
-            newLaser.InitInPositionWithTarget(LaserPosition.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.Laser);
-        }
-
-        _hero._anim.SetBool("laser", Input.GetButton("Fire1"));
     }
 
-    private IEnumerator Routine_Cooldown()
+    private void ShootIfPossible()
     {
-        yield return new WaitForSeconds(_cooldown);
-        _isInCooldown = false;
+        if (!ShouldShootRightNow()) { return; }
+
+        var newLaser = Instantiate(BulletPrefabsPerLevel[hero.Level]);
+        newLaser.InitInPositionWithTarget(LasersInitialPosition.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.Laser);
+
+        isInCooldown = true;
+        StartCoroutine(Routine_ResetCooldownAfterTime());
     }
+
+    private bool ShouldShootRightNow()
+    {
+        return InputIsTryingToShoot() && !isInCooldown;
+    }
+
+    private bool InputIsTryingToShoot()
+    {
+        return Input.GetButton(LaserButton);
+    }
+
+    private IEnumerator Routine_ResetCooldownAfterTime()
+    {
+        yield return new WaitForSeconds(cooldownWhenPressed);
+        isInCooldown = false;
+    }
+
 }

@@ -4,11 +4,11 @@ using System.Collections;
 public abstract class HeroSkill : MonoBehaviour
 {
 
-    protected Hero _hero;
-    
-    void Start()
+    protected Hero hero;
+
+    protected void Start()
     {
-        _hero = GetComponent<Hero>();
+        hero = GetComponent<Hero>();
     }
 
     public static Vector3 PointerPosition()

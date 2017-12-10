@@ -153,13 +153,13 @@ public class EnemySimpleMoving : Enemy {
 
         if (Attacking && AttackTarget != null)
         {
-            transform.FlipToLookTo(AttackTarget.transform.position);
+            transform.FlipXToLookTo(AttackTarget.transform.position);
         }
     }
 
     private void MoveTorwardsTarget()
     {
-        transform.FlipToLookTo(MovementTargetPosition);
+        transform.FlipXToLookTo(MovementTargetPosition);
 
         var vectorDistanceToTarget = MovementTargetPosition - transform.position;
         var distanceToMoveThisFrame = MovingSpeed * Time.deltaTime;

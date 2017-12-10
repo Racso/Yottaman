@@ -4,40 +4,46 @@ using UnityEngine;
 
 public class Hero : Singleton<Hero> {
 
-    private Collider2D _collider;
-    public Animator _anim;
-
-    public float FlightSpeed;
-    public LayerMask SolidLayers;
+    public float FlightSpeed = 600;
     public int Level = 0;
 
-	void Start () {
-        _collider = GetComponent<Collider2D>();
-        _anim = GetComponentInChildren<Animator>();
+    private new Collider2D collider;
+    private Animator animator;
+
+	void Start ()
+    {
+        collider = GetComponent<Collider2D>();
+        animator = GetComponentInChildren<Animator>();
 	}
 	
-	void Update () {
-        var movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * FlightSpeed * Time.deltaTime;
+	void Update ()
+    {
+        UpdatePositionWithAnimation();
+        transform.FlipXToLookTo(HeroSkill.PointerPosition());
+        ClampPositionToScenario();
+	}
 
-        //Evitar incrustarse en sólidos.
-        var hit = Physics2D.BoxCast(_collider.bounds.center + (Vector3)movement.normalized * 0.1f, _collider.bounds.size, 0, movement.normalized, movement.magnitude, SolidLayers);
-        if (hit)
-        {
-            var movimientoOK = hit.distance;
-            movement = movement.normalized * movimientoOK;
-        }
-
-        _anim.SetBool("flying", !movement.IsCloseEnoughTo(Vector3.zero));
+    private void UpdatePositionWithAnimation()
+    {
+        Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * FlightSpeed * Time.deltaTime;
         transform.Translate(movement);
 
-        transform.localScale = transform.LocalScaleLookingTowards(HeroSkill.PointerPosition());
+        bool AmIMoving = !movement.IsCloseEnoughTo(Vector3.zero);
+        animator.SetBool("flying", AmIMoving);
+    }
 
-        transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, ScenarioBounds.Instance.TopLeft.x, ScenarioBounds.Instance.BottomRight.x),
-            Mathf.Clamp(transform.position.y, ScenarioBounds.Instance.BottomRight.y, ScenarioBounds.Instance.TopLeft.y),
-            transform.position.z
-            );
+    private void ClampPositionToScenario()
+    {
+        float clampedX = Mathf.Clamp(transform.position.x, ScenarioBounds.Instance.Left, ScenarioBounds.Instance.Right);
+        float clampedY = Mathf.Clamp(transform.position.y, ScenarioBounds.Instance.Bottom, ScenarioBounds.Instance.Top);
+        float clampedZ = transform.position.z;
 
-	}
+        transform.position = new Vector3(clampedX, clampedY, clampedZ);
+    }
+
+    public void UpdateSkillAnimation(string skillName, bool animation)
+    {
+        animator.SetBool(skillName, animation);
+    }
 
 }

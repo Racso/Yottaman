@@ -29,15 +29,15 @@ public static class Extensions
         return (mask.value & 1 << go.layer) != 0;
     }
 
-    public static Vector3 LocalScaleLookingTowards(this Transform transform, Vector3 to)
+    public static Vector3 LocalScaleHorizontallyLookingTowards(this Transform transform, Vector3 to)
     {
         float lookTo = Mathf.Sign(to.x - transform.position.x);
         if (lookTo == 0) { lookTo = transform.localScale.x; }
         return new Vector3(lookTo, transform.localScale.y, transform.localScale.z);
     }
 
-    public static void FlipToLookTo(this Transform gameobject, Vector3 to)
+    public static void FlipXToLookTo(this Transform gameobject, Vector3 to)
     {
-        gameobject.transform.localScale = gameobject.transform.LocalScaleLookingTowards(to);
+        gameobject.transform.localScale = gameobject.transform.LocalScaleHorizontallyLookingTowards(to);
     }
 }
