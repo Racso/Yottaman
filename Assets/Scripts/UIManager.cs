@@ -40,7 +40,7 @@ public class UIManager : Singleton<UIManager>
         Level.text = "POWER LEVEL: " + PowerLevelString(Hero.Instance.Level);
         var enemies = GameManager.Instance.GetTotalRemainingEnemies();
         EnemiesLeft.text = "ENEMIES LEFT: " + enemies.ToString();
-        DamageToProperty.text = GameManager.Instance.DamageToProperty == 0 ? "" : "DAMAGE TO PROPERTY: " + GameManager.Instance.DamageToProperty.ToString();
+        DamageToProperty.text = "WORLD DAMAGE LEFT: " + GameManager.Instance.DamageToProperty.ToString();
     }
 
     public void Say(string msg)
@@ -71,7 +71,7 @@ public class UIManager : Singleton<UIManager>
             case 1:
                 return "Dangerous";
             default:
-                return "9001";
+                return "Apocalyptic";
         }
     }
 
