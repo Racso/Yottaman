@@ -3,30 +3,30 @@ using System.Collections;
 
 public class RotateTowardsTarget : MonoBehaviour
 {
-
     public Transform HotPoint;
-    private GameObject _target;
-    private Collider2D _targetCollider;
+    private GameObject currentTarget;
 
-    public bool Paused;
-
-    public void SetTarget(GameObject Target)
+    public void SetTargetAndShow(GameObject Target)
     {
-        _target = Target;
-        if (Target != null) { _targetCollider = Target.GetComponent<Collider2D>(); }
-        gameObject.SetActive(Target != null);
-        Paused = false;
+        currentTarget = Target;
+        gameObject.SetActive(true);
+        enabled = true;
+    }
+
+    public void StopTargetingAndHide()
+    {
+        StopTargeting();
+        gameObject.SetActive(false);
+    }
+
+    public void StopTargeting()
+    {
+        enabled = false;
     }
 
     void Update()
     {
-        if (_target == null)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
-        if (Paused) { return; }
-        var otherPosition = _target.TargetCenter(); //_targetCollider != null ? _targetCollider.bounds.center : _target.transform.position;
-        gameObject.transform.right = (otherPosition - transform.position).normalized * Mathf.Sign(otherPosition.x - transform.position.x);
+        var targetCurrentPosition = currentTarget.TargetCenter();
+        gameObject.transform.right = (targetCurrentPosition - transform.position).normalized * Mathf.Sign(targetCurrentPosition.x - transform.position.x);
     }
 }

@@ -119,7 +119,7 @@ public class EnemySimpleMoving : Enemy {
 
         var newBullet = Instantiate(ShootingBulletPrefab);
         newBullet.InitInPositionWithTarget(PointerWhenAttacking.HotPoint.transform.position, target);
-        PointerWhenAttacking.Paused = true;
+        PointerWhenAttacking.StopTargeting();
         AudioManager.Instance.PlaySFX(AudioManager.Instance.Shoot);
 
         yield return new WaitForSeconds(0.2f);
@@ -131,14 +131,14 @@ public class EnemySimpleMoving : Enemy {
     {
         Attacking = true;
         AttackTarget = target;
-        PointerWhenAttacking.SetTarget(target);
+        PointerWhenAttacking.SetTargetAndShow(target);
     }
 
     private void StopAttackingAnimation()
     {
         Attacking = false;
         AttackTarget = null;
-        PointerWhenAttacking.SetTarget(null);
+        PointerWhenAttacking.StopTargetingAndHide();
     }
 
     void Update()
