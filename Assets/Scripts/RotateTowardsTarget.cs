@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Pointer : MonoBehaviour
+public class RotateTowardsTarget : MonoBehaviour
 {
 
     public Transform HotPoint;

@@ -33,8 +33,8 @@ public class Hero : Singleton<Hero> {
         transform.localScale = transform.LocalScaleLookingTowards(HeroSkill.PointerPosition());
 
         transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, Scenario.Instance.TopLeft.transform.position.x, Scenario.Instance.BottomRight.transform.position.x),
-            Mathf.Clamp(transform.position.y, Scenario.Instance.BottomRight.transform.position.y, Scenario.Instance.TopLeft.transform.position.y),
+            Mathf.Clamp(transform.position.x, ScenarioBounds.Instance.TopLeft.transform.position.x, ScenarioBounds.Instance.BottomRight.transform.position.x),
+            Mathf.Clamp(transform.position.y, ScenarioBounds.Instance.BottomRight.transform.position.y, ScenarioBounds.Instance.TopLeft.transform.position.y),
             transform.position.z
             );
 

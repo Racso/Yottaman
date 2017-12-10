@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class HeroLaser : HeroSkill
+public class HeroSkillLaser : HeroSkill
 {
 
     public Transform LaserPosition;
@@ -11,7 +11,7 @@ public class HeroLaser : HeroSkill
     private float _cooldown = 0.5f;
     private bool _isInCooldown = false;
 
-    public List<Bullet> BulletPrefabsPerLevel;
+    public List<LinearProjectile> BulletPrefabsPerLevel;
 
     void Update()
     {

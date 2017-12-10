@@ -6,10 +6,10 @@ public class Enemy : MonoBehaviour
 {
 
     public float RunningSpeed;
-    public Bullet BulletPrefab;
+    public LinearProjectile BulletPrefab;
 
     public Vector3 NextPoint;
-    public Pointer PointerWhenAttacking;
+    public RotateTowardsTarget PointerWhenAttacking;
 
     private GameObject AttackTarget;
   

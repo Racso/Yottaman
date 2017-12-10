@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scenario : Singleton<Scenario>
+public class ScenarioBounds : Singleton<ScenarioBounds>
 {
 
     public List<Transform> Corners;
