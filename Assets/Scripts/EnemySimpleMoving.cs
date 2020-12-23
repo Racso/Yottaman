@@ -169,7 +169,7 @@ public class EnemySimpleMoving : Enemy {
         }
         else
         {
-            var vectorToMoveThisFrame = vectorDistanceToTarget.normalized * MovingSpeed * Time.deltaTime;
+            var vectorToMoveThisFrame = vectorDistanceToTarget.normalized * distanceToMoveThisFrame;
             transform.Translate(vectorToMoveThisFrame);
         }
     }
